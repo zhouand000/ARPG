@@ -146,3 +146,6 @@ tramp
 
 # cask packages
 .cask/
+/bin/
+/bin/
+/bin/
