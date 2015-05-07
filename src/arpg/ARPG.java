@@ -4,7 +4,7 @@
 package arpg;
 
 /**
- * @author 
+ * @author
  * 
  */
 public class ARPG {
