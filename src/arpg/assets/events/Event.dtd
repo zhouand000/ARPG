@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE Event [
+
+<!ELEMENT event (#PCDATA)>
+<!ELEMENT text (#CDATA)>
+<!ELEMENT choice (#PCDATA)>
+<!ELEMENT npc (#PCDATA)>
+<!ELEMENT background (#CDATA)>
+
+<!ATTLIST event name CDATA #REQUIRED>
+<!ATTLIST choice hidden CDATA #REQUIRED>
+<!ATTLIST npc hostile CDATA #REQUIRED>
+<!ATTLIST background src CDATA #REQUIRED>
+
+]>
