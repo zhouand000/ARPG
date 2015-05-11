@@ -3,6 +3,8 @@
  */
 package arpg.game;
 
+import java.util.ArrayList;
+
 /**
  * @author Andrew
  * 
@@ -14,7 +16,11 @@ public class Character {
 	 */
 	public final String name;
 	
-	private int health;
+	private byte level;
+	
+	private int experience;
+	
+	private byte health;
 	
 	private byte strength;
 	
@@ -30,8 +36,11 @@ public class Character {
 	
 	boolean isNPC;
 	
+	private ArrayList<Effect> effects;
+	
 	/**
 	 * @param name
+	 * @param level 
 	 * @param strength
 	 * @param defense 
 	 * @param intelligence 
@@ -39,21 +48,77 @@ public class Character {
 	 * @param maxHealth
 	 * 
 	 */
-	public Character (String name, byte strength, byte defense,
+	public Character (String name, byte level, byte strength, byte defense,
 			byte intelligence, byte dexterity, byte maxHealth) {
+		
+		this (name, level, strength, defense, intelligence, dexterity, maxHealth, new ArrayList<Effect>());
+		
+	}
+	
+	/**
+	 * @param name
+	 * @param level 
+	 * @param strength
+	 * @param defense 
+	 * @param intelligence 
+	 * @param dexterity 
+	 * @param maxHealth
+	 * @param effects 
+	 * 
+	 */
+	public Character (String name, byte level, byte strength, byte defense,
+			byte intelligence, byte dexterity, byte maxHealth, ArrayList<Effect> effects) {
 		
 		// TODO Auto-generated constructor stub
 		this.name = name;
+		this.level = level;
 		this.strength = strength;
 		this.defense = defense;
 		this.intelligence = intelligence;
 		this.dexterity = dexterity;
 		this.maxHealth = maxHealth;
 		this.health = maxHealth;
+		this.effects = effects;
+		
+	}
+	
+	/**
+	 * Applies the current effects, and decrements the timer
+	 */
+	public void applyEffects() {
+		
 		
 		
 	}
 	
+	/**
+	 * @return the level
+	 */
+	public byte getLevel () {
+		return level;
+	}
+
+	/**
+	 * @param level the level to set
+	 */
+	public void setLevel (byte level) {
+		this.level = level;
+	}
+
+	/**
+	 * @return the experience
+	 */
+	public int getExperience () {
+		return experience;
+	}
+
+	/**
+	 * @param experience the experience to set
+	 */
+	public void setExperience (int experience) {
+		this.experience = experience;
+	}
+
 	/**
 	 * @return the health
 	 */
@@ -65,7 +130,7 @@ public class Character {
 	 * @param health
 	 *            the health to set
 	 */
-	public void setHealth (int health) {
+	public void setHealth (byte health) {
 		this.health = health;
 	}
 	
@@ -143,5 +208,21 @@ public class Character {
 	public void setMaxHealth (byte maxHealth) {
 		this.maxHealth = maxHealth;
 	}
+
+	/**
+	 * @return the effects
+	 */
+	public ArrayList<Effect> getEffects () {
+		return effects;
+	}
+
+	/**
+	 * @param effects the effects to set
+	 */
+	public void setEffects (ArrayList<Effect> effects) {
+		this.effects = effects;
+	}
+	
+	
 	
 }
