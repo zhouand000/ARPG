@@ -9,11 +9,14 @@ package arpg.game.locations;
  */
 public class Region {
 	
+	public final String name;
+	
 	/**
+	 * @param name 
 	 * 
 	 */
-	public Region () {
-		// TODO Auto-generated constructor stub
+	public Region (String name) {
+		this.name = name;
 	}
 	
 }

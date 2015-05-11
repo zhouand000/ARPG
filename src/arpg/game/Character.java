@@ -40,34 +40,35 @@ public class Character {
 	
 	/**
 	 * @param name
-	 * @param level 
+	 * @param level
 	 * @param strength
-	 * @param defense 
-	 * @param intelligence 
-	 * @param dexterity 
+	 * @param defense
+	 * @param intelligence
+	 * @param dexterity
 	 * @param maxHealth
 	 * 
 	 */
 	public Character (String name, byte level, byte strength, byte defense,
 			byte intelligence, byte dexterity, byte maxHealth) {
 		
-		this (name, level, strength, defense, intelligence, dexterity, maxHealth, new ArrayList<Effect>());
+		this(name, level, strength, defense, intelligence, dexterity, maxHealth, new ArrayList<Effect>());
 		
 	}
 	
 	/**
 	 * @param name
-	 * @param level 
+	 * @param level
 	 * @param strength
-	 * @param defense 
-	 * @param intelligence 
-	 * @param dexterity 
+	 * @param defense
+	 * @param intelligence
+	 * @param dexterity
 	 * @param maxHealth
-	 * @param effects 
+	 * @param effects
 	 * 
 	 */
 	public Character (String name, byte level, byte strength, byte defense,
-			byte intelligence, byte dexterity, byte maxHealth, ArrayList<Effect> effects) {
+			byte intelligence, byte dexterity, byte maxHealth,
+			ArrayList<Effect> effects) {
 		
 		// TODO Auto-generated constructor stub
 		this.name = name;
@@ -85,10 +86,87 @@ public class Character {
 	/**
 	 * Applies the current effects, and decrements the timer
 	 */
-	public void applyEffects() {
+	public void applyEffects () {
 		
+		for (Effect e : effects) {
+			
+			applyEffect(e);
+			
+		}
 		
+	}
+	
+	/**
+	 * @param e
+	 */
+	public void addEffect (Effect e) {
 		
+		if (e.isPermanent) {
+			
+			applyEffect(e);
+			
+		}
+		effects.add(e);
+		
+	}
+	
+	/**
+	 * @param e
+	 */
+	public void applyEffect (Effect e) {
+		
+		increaseLevel(e.level);
+		
+		this.experience += e.experience;
+		updateLevel();
+		
+		health += e.health;
+		maxHealth += e.maxHealth;
+		
+		// TODO Finish
+		
+	}
+	
+	/**
+	 * Removes an effect
+	 * @param e
+	 */
+	public void unapplyEffect (Effect e) {
+		
+		// TODO Finish method
+		
+	}
+	
+	/**
+	 * Updates level to reflect experience gain
+	 */
+	private void updateLevel () {
+		
+		while (experience > (16 * 2 ^ level)) {
+			
+			level++;
+			
+		}
+		
+	}
+	
+	/**
+	 * Should only be called when level is increased by an effect
+	 * 
+	 * @param amount
+	 */
+	private void increaseLevel (int amount) {
+		
+		level += amount;
+		experience = 16 * 2 ^ level;
+		
+	}
+	
+	/**
+	 * @return the experience
+	 */
+	public int getExperience () {
+		return experience;
 	}
 	
 	/**
@@ -97,28 +175,23 @@ public class Character {
 	public byte getLevel () {
 		return level;
 	}
-
+	
 	/**
-	 * @param level the level to set
+	 * @param level
+	 *            the level to set
 	 */
 	public void setLevel (byte level) {
 		this.level = level;
 	}
-
+	
 	/**
-	 * @return the experience
-	 */
-	public int getExperience () {
-		return experience;
-	}
-
-	/**
-	 * @param experience the experience to set
+	 * @param experience
+	 *            the experience to set
 	 */
 	public void setExperience (int experience) {
 		this.experience = experience;
 	}
-
+	
 	/**
 	 * @return the health
 	 */
@@ -208,21 +281,20 @@ public class Character {
 	public void setMaxHealth (byte maxHealth) {
 		this.maxHealth = maxHealth;
 	}
-
+	
 	/**
 	 * @return the effects
 	 */
 	public ArrayList<Effect> getEffects () {
 		return effects;
 	}
-
+	
 	/**
-	 * @param effects the effects to set
+	 * @param effects
+	 *            the effects to set
 	 */
 	public void setEffects (ArrayList<Effect> effects) {
 		this.effects = effects;
 	}
-	
-	
 	
 }

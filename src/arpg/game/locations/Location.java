@@ -19,6 +19,4 @@ public class Location {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-	
 }

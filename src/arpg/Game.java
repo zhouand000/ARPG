@@ -11,13 +11,23 @@ import arpg.game.events.*;
  */
 public class Game {
 	
-	Event startEvent = new Event("StartEvent", "Start Event", "Welcome to the realm of ARPG!");
+	Event currentEvent;
 	
 	/**
 	 * 
 	 */
 	public Game () {
 		// TODO Auto-generated constructor stub
+	}
+	
+	/**
+	 * 
+	 */
+	public void startGame () {
+		
+		
+		currentEvent = new Event("StartEvent", "Start Event", "Welcome to the realm of ARPG!");
+		
 	}
 	
 }
