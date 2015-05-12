@@ -29,6 +29,7 @@ public class Item {
 		// TODO Auto-generated constructor stub
 		this.name = name;
 		this.effect = effect;
+		effect.isTemporaryEffect = true;
 	}
 	
 }
