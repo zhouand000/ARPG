@@ -53,6 +53,15 @@ public class ChoiceList {
 	}
 	
 	/**
+	 * @param c
+	 */
+	public void add (Choice c) {
+		
+		choices.add(c);
+		
+	}
+	
+	/**
 	 * @return a list with the choice strings
 	 */
 	public ArrayList<String> getChoiceText () {

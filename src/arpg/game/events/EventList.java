@@ -36,4 +36,13 @@ public class EventList {
 		
 	}
 	
+	/**
+	 * @param e
+	 */
+	public void add (Event e) {
+		
+		eventList.add(e);
+		
+	}
+	
 }

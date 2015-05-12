@@ -4,10 +4,14 @@
 package arpg.game.events;
 
 /**
+ * Basic events prototype
+ * 
  * @author Andrew
  * 
  */
 public class EventRandomizer {
+	
+	
 	
 	/**
 	 * 

@@ -50,6 +50,30 @@ public class Event {
 	}
 	
 	/**
+	 * Constructor
+	 * 
+	 * @param ID
+	 * @param name
+	 * @param text
+	 * @param arguments Varargs for events
+	 */
+	public Event (String ID, String name, String text, Choice... arguments) {
+		
+		this.ID = ID;
+		this.name = name;
+		this.text = text;
+		
+		choices = new ChoiceList();
+		for (Choice c : arguments) {
+			
+			choices.add(c);
+			
+		}
+		
+	}
+	
+	
+	/**
 	 * @return an ArrayList with the text of the Choices
 	 */
 	public ArrayList<String> getChoiceText () {
