@@ -1,26 +1,21 @@
 /**
  * 
  */
-package arpg.game;
+package arpg.game.effects;
 
 /**
+ * 
+ * 
+ * 
  * @author Andrew
  * 
  */
-public class Effect {
-	
-	// TODO Finish the class
-	
-	/**
-	 * The name of the effect.
-	 */
-	public final String name;
-	
-	public final int experience;
-	
-	public final byte level;
+@Deprecated
+public class StatusEffect extends Effect {
 	
 	public byte health;
+	
+	public byte absorption;
 	
 	public byte maxHealth;
 	
@@ -31,36 +26,20 @@ public class Effect {
 	public byte intelligence;
 	
 	/**
-	 * The effect's remaining duration. Should be positive if the effect has a
-	 * set duration. When this reaches 0, the effect should be unapplied. If the
-	 * effect is permanent, this should be -1. If the effect is a semi-permanent
-	 * effect, this should be -2
+	 * @param name
+	 * @param description
 	 */
-	public byte remainingDuration;
-	
-	/**
-	 * If the effect should be permanently applied to the character
-	 */
-	public boolean isPermanent;
-	
-	/**
-	 * If the effect should only get applied, and removed when the duration ends
-	 */
-	public boolean isOneTimeEffect;
-	
-	/**
-	 * If the effect is temporary
-	 */
-	public boolean isTemporaryEffect;
-	
-	/**
-	 * If the effect is caused by an item or an ability
-	 */
-	public boolean isSemiPermanent;
+	public StatusEffect (String name, String description) {
+		
+		// TODO Auto-generated constructor stub
+		super(name, description);
+		
+	}
 	
 	/**
 	 * @param name
 	 *            Effect name. If null,
+	 * @param description
 	 * @param experience
 	 *            Experience change.
 	 * @param level
@@ -87,17 +66,19 @@ public class Effect {
 	 *            turn
 	 * @param isTemporaryEffect
 	 * @param isSemiPermanent
+	 * @param affectUser
 	 * 
 	 */
-	public Effect (String name, int experience, byte level, byte health,
+	public ItemEffect (String name, String description, int experience,
+			byte level,
+			byte health,
 			byte maxHealth, byte strength,
 			byte defense, byte remainingDuration, boolean isPermanent,
 			boolean isOneTimeEffect, boolean isTemporaryEffect,
-			boolean isSemiPermanent) {
+			boolean isSemiPermanent, boolean affectUser) {
 		
 		this.name = name != null ? name : "";
-		this.experience = experience;
-		this.level = level;
+		this.description = description;
 		this.health = health;
 		this.maxHealth = maxHealth;
 		this.strength = strength;
@@ -107,6 +88,7 @@ public class Effect {
 		this.isOneTimeEffect = isOneTimeEffect;
 		this.isTemporaryEffect = isTemporaryEffect;
 		this.isSemiPermanent = isSemiPermanent;
+		this.affectUser = affectUser;
 		
 	}
 	

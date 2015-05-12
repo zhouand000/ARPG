@@ -3,6 +3,10 @@
  */
 package arpg.game;
 
+import java.util.ArrayList;
+
+import arpg.game.effects.*;
+
 /**
  * @author Andrew
  * 
@@ -15,23 +19,32 @@ public class Item {
 	public final String name;
 	
 	/**
-	 * Item effect 
+	 * 
 	 */
-	public Effect effect;
+	public final String description;
+	
+	/**
+	 * Item effect
+	 */
+	public ArrayList<ItemEffect> effects;
 	
 	/**
 	 * @param name
 	 * @param effect
 	 * 
 	 */
-	public Item (String name, Effect effect) {
+	public Item (String name, String description, ItemEffect... arguments) {
 		
 		// TODO Auto-generated constructor stub
 		this.name = name;
-		this.effect = effect;
-		effect.isTemporaryEffect = true;
-		effect.isPermanent = false;
-		effect.remainingDuration = -2;
+		
+		this.description = description;
+		
+		for (ItemEffect e : arguments) {
+			
+			effects.add(e);
+			
+		}
 		
 	}
 	
