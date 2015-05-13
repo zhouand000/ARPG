@@ -34,6 +34,8 @@ public class Character {
 	
 	private byte maxHealth;
 	
+	private byte speed;
+	
 	boolean isHostile;
 	
 	boolean isNPC;
@@ -51,9 +53,9 @@ public class Character {
 	 * 
 	 */
 	public Character (String name, byte level, byte strength, byte defense,
-			byte intelligence, byte dexterity, byte maxHealth) {
+			byte intelligence, byte dexterity, byte maxHealth, byte speed) {
 		
-		this(name, level, strength, defense, intelligence, dexterity, maxHealth, new ArrayList<Effect>());
+		this(name, level, strength, defense, intelligence, dexterity, maxHealth, speed, new ArrayList<Effect>());
 		
 	}
 	
@@ -69,7 +71,7 @@ public class Character {
 	 * 
 	 */
 	public Character (String name, byte level, byte strength, byte defense,
-			byte intelligence, byte dexterity, byte maxHealth,
+			byte intelligence, byte dexterity, byte maxHealth, byte speed,
 			ArrayList<Effect> effects) {
 		
 		// TODO Auto-generated constructor stub
