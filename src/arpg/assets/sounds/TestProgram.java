@@ -29,7 +29,7 @@ public class TestProgram {
 	 */
 	public static void main (String[] args) {
 		
-		Scanner sc = new Scanner (System.in);
+		Scanner sc = new Scanner(System.in);
 		System.out.println(Arrays.toString(AudioSystem.getAudioFileTypes()));
 		
 		AudioInputStream ais;

@@ -3,7 +3,7 @@
  */
 package arpg.game.character;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import arpg.game.effects.*;
 
@@ -12,6 +12,11 @@ import arpg.game.effects.*;
  * 
  */
 public class Character {
+	
+	/**
+	 * A map containing all of the Character's Stats
+	 */
+	public StatMap stats;
 	
 	/**
 	 * Name
