@@ -9,12 +9,7 @@ package arpg.game.effects;
  */
 public class ItemEffect extends Effect {
 	
-	// TODO Finish the class
-	
-	/**
-	 * The name of the effect.
-	 */
-	public final String name;
+	// TODO Finish the class and update to reflect the new Stat API
 	
 	/**
 	 * A description of the effect
@@ -94,8 +89,9 @@ public class ItemEffect extends Effect {
 			boolean isOneTimeEffect, boolean isTemporaryEffect,
 			boolean isSemiPermanent, boolean affectUser) {
 		
-		this.name = name != null ? name : "";
-		this.description = description;
+		// TODO Add logging in case of null;
+		super(name != null ? name : "", description != null ? name : "");
+		
 		this.experience = experience;
 		this.level = level;
 		this.health = health;
@@ -110,5 +106,4 @@ public class ItemEffect extends Effect {
 		this.affectUser = affectUser;
 		
 	}
-	
 }

@@ -23,7 +23,11 @@ public abstract class Modifier {
 	 */
 	protected Modifier (String s) {
 		
+		s = s.trim();
+		
+		if (!(s != null) || s.isEmpty()) throw new IllegalArgumentException("Exception occured while creating a Modifier object");
 		this.statName = s;
+		
 		
 	}
 	

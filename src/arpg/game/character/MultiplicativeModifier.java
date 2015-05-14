@@ -17,6 +17,7 @@ public class MultiplicativeModifier extends Modifier {
 		// TODO Auto-generated constructor stub
 		
 		super(s);
+		
 	}
 	
 	/* (non-Javadoc)
@@ -25,6 +26,8 @@ public class MultiplicativeModifier extends Modifier {
 	@Override
 	public void applyModifier (Stat s) {
 		// TODO Auto-generated method stub
+		
+		assert()
 		
 	}
 	
