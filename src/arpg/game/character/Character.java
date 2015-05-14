@@ -1,11 +1,11 @@
 /**
  * 
  */
-package arpg.game;
+package arpg.game.character;
 
 import java.util.ArrayList;
 
-import arpg.game.effects.Effect;
+import arpg.game.effects.*;
 
 /**
  * @author Andrew
@@ -83,6 +83,7 @@ public class Character {
 		this.dexterity = dexterity;
 		this.maxHealth = maxHealth;
 		this.health = maxHealth;
+		this.speed = speed;
 		this.effects = effects;
 		
 	}
@@ -105,7 +106,7 @@ public class Character {
 	 */
 	public void addEffect (Effect e) {
 		
-		if (e.isPermanent) {
+		if (e instanceof PermanentEffect) {
 			
 			applyEffect(e);
 			
@@ -285,6 +286,21 @@ public class Character {
 	 */
 	public void setMaxHealth (byte maxHealth) {
 		this.maxHealth = maxHealth;
+	}
+	
+	/**
+	 * @return the speed
+	 */
+	public byte getSpeed () {
+		return speed;
+	}
+	
+	/**
+	 * @param speed
+	 *            the speed to set
+	 */
+	public void setSpeed (byte speed) {
+		this.speed = speed;
 	}
 	
 	/**
