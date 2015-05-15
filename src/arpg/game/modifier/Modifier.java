@@ -1,7 +1,10 @@
 /**
  * 
  */
-package arpg.game.character;
+package arpg.game.modifier;
+
+import arpg.game.character.Stat;
+import arpg.game.character.StatType;
 
 /**
  * @author Andrew

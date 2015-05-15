@@ -1,7 +1,7 @@
 /**
  * 
  */
-package arpg.game.character;
+package arpg.game.modifier;
 
 /**
  * @author Andrew

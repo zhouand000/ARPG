@@ -3,6 +3,8 @@
  */
 package arpg.game.effects;
 
+import arpg.game.modifier.*;
+
 /**
  * @author Andrew
  *
@@ -20,14 +22,21 @@ public abstract class Effect {
 	public final String description;
 	
 	/**
+	 * The modifier associated with the effect
+	 */
+	public final Modifier modifier;
+	
+	/**
 	 * @param name
 	 * @param description
+	 * @param modifier
 	 *
 	 */
-	public Effect (String name, String description) {
+	public Effect (String name, String description, Modifier modifier) {
 		
 		this.name = name;
 		this.description = description;
+		this.modifier = modifier;
 		
 	}
 	
