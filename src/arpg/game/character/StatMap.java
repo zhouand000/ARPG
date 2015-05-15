@@ -3,14 +3,14 @@
  */
 package arpg.game.character;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 /**
  * @author Andrew
  * 
  */
-public class StatMap extends HashMap<String, Stat> {
+public class StatMap extends EnumMap<StatType, Stat> {
 	
 	/**
 	 * 
@@ -18,19 +18,32 @@ public class StatMap extends HashMap<String, Stat> {
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * 
+	 * @param keyType
 	 */
-	public StatMap () {
+	public StatMap (Class<StatType> keyType) {
+		
 		// TODO Auto-generated constructor stub
-		super();
+		super(keyType);
+		
 	}
 	
 	/**
-	 * @param map
+	 * @param m
 	 */
-	public StatMap (Map<String, Stat> map) {
+	public StatMap (Map<StatType, ? extends Stat> m) {
 		
-		super(map);
+		// TODO Auto-generated constructor stub
+		super(m);
+		
+	}
+	
+	/**
+	 * @param m
+	 */
+	public StatMap (EnumMap<StatType, ? extends Stat> m) {
+		
+		// TODO Auto-generated constructor stub
+		super(m);
 		
 	}
 	

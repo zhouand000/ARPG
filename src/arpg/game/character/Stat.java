@@ -15,14 +15,14 @@ public class Stat {
 	public final String name;
 	
 	/**
-	 * Base stat
+	 * Base stat; the stat unchanged by effects. 
 	 */
 	public int base;
 	
 	/**
 	 * Current stat
 	 */
-	public int current;
+	public float current;
 	
 	/**
 	 * @param name
