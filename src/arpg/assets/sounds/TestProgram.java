@@ -8,8 +8,9 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import javax.sound.sampled.*;
-import javax.swing.*;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 /**
  * @author Andrew
@@ -45,7 +46,7 @@ public class TestProgram {
 			c.open(ais);
 		}
 		catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -53,7 +54,7 @@ public class TestProgram {
 			System.out.println(inputFile.getCanonicalPath());
 		}
 		catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		

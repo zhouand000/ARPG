@@ -3,16 +3,19 @@
  */
 package arpg.game.character;
 
+// TODO Finish StatType Enum
 /**
+ * 
  * @author Andrew
- *
+ * 
  */
 public enum StatType {
 	
 	/**
 	 * Level of the character
 	 */
-	LEVEL,
+	// TODO Fill out like this
+	LEVEL (),
 	/**
 	 * Amount of experience
 	 */
@@ -58,10 +61,31 @@ public enum StatType {
 	 */
 	KARMA;
 	
+	/**
+	 * The name of the stat
+	 */
+	public final String name;
+	
+	/**
+	 * The stat's abbreviation
+	 */
+	public final String abbreviation;
+	
 	private StatType () {
+		
+		this.name = "";
+		this.abbreviation = "";
+		
 	}
 	
+	/**
+	 * @param name
+	 * @param abbreviation
+	 */
 	private StatType (String name, String abbreviation) {
+		
+		this.name = name;
+		this.abbreviation = abbreviation;
 		
 	}
 	
@@ -75,7 +99,31 @@ public enum StatType {
 		s = s.trim().toLowerCase();
 		
 		switch (s) {
-			
+			case "LEVEL":
+				return StatType.LEVEL;
+			case "EXPERIENCE":
+				return StatType.EXPERIENCE;
+			case "HEALTH":
+				return StatType.HEALTH;
+			case "STRENGTH":
+				return StatType.STRENGTH;
+			case "DEFENSE":
+				return StatType.DEFENSE;
+			case "DEXTERITY":
+				return StatType.DEXTERITY;
+			case "INTELLIGENCE":
+				return StatType.INTELLIGENCE;
+			case "SPEED":
+				return StatType.SPEED;
+			case "PERCEPTION":
+				return StatType.PERCEPTION;
+			case "WILLPOWER":
+				return StatType.WILLPOWER;
+			case "LUCK":
+				return StatType.LUCK;
+			case "KARMA":
+				return StatType.KARMA;
+			default:
 		}
 		
 		// TODO Finish method
