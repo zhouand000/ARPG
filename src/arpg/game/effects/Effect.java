@@ -1,11 +1,11 @@
 /**
- * 
+ *
  */
 package arpg.game.effects;
 
 /**
  * @author Andrew
- * 
+ *
  */
 public abstract class Effect {
 	
@@ -22,8 +22,7 @@ public abstract class Effect {
 	/**
 	 * @param name
 	 * @param description
-	 * @param remainingDuration
-	 * @param level
+	 *
 	 */
 	public Effect (String name, String description) {
 		

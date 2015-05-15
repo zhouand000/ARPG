@@ -33,13 +33,21 @@ public class Character {
 	
 	private byte defense;
 	
-	private byte intelligence;
-	
 	private byte dexterity;
+	
+	private byte intelligence;
 	
 	private byte maxHealth;
 	
 	private byte speed;
+	
+	private byte perception;
+	
+	private byte willpower;
+	
+	private byte luck;
+	
+	private byte karma;
 	
 	boolean isHostile;
 	
@@ -48,49 +56,78 @@ public class Character {
 	private ArrayList<Effect> effects;
 	
 	/**
+	 * @param stats
 	 * @param name
 	 * @param level
+	 * @param experience
 	 * @param strength
 	 * @param defense
-	 * @param intelligence
 	 * @param dexterity
+	 * @param intelligence
 	 * @param maxHealth
-	 * 
+	 * @param speed
+	 * @param perception
+	 * @param willpower
+	 * @param luck
+	 * @param karma
+	 * @param isHostile
+	 * @param isNPC
+	 * @param arguments
 	 */
-	public Character (String name, byte level, byte strength, byte defense,
-			byte intelligence, byte dexterity, byte maxHealth, byte speed) {
+	public Character (StatMap stats, String name, byte level, int experience,
+			byte strength, byte defense, byte dexterity,
+			byte intelligence, byte maxHealth, byte speed, byte perception,
+			byte willpower, byte luck, byte karma, boolean isHostile,
+			boolean isNPC, Effect... arguments) {
 		
-		this(name, level, strength, defense, intelligence, dexterity, maxHealth, speed, new ArrayList<Effect>());
+		this (stats, name, level, experience, maxHealth, strength, defense, dexterity, intelligence, maxHealth, speed, perception, willpower, luck, karma, isNPC, isNPC, new ArrayList<Effect>(Arrays.asList(arguments)));
 		
 	}
 	
 	/**
+	 * @param stats
 	 * @param name
 	 * @param level
+	 * @param experience
+	 * @param health
 	 * @param strength
 	 * @param defense
-	 * @param intelligence
 	 * @param dexterity
+	 * @param intelligence
 	 * @param maxHealth
+	 * @param speed
+	 * @param perception
+	 * @param willpower
+	 * @param luck
+	 * @param karma
+	 * @param isHostile
+	 * @param isNPC
 	 * @param effects
-	 * 
 	 */
-	public Character (String name, byte level, byte strength, byte defense,
-			byte intelligence, byte dexterity, byte maxHealth, byte speed,
-			ArrayList<Effect> effects) {
+	public Character (StatMap stats, String name, byte level, int experience,
+			byte health, byte strength, byte defense, byte dexterity,
+			byte intelligence, byte maxHealth, byte speed, byte perception,
+			byte willpower, byte luck, byte karma, boolean isHostile,
+			boolean isNPC, ArrayList<Effect> effects) {
 		
-		// TODO Auto-generated constructor stub
+		this.stats = stats;
 		this.name = name;
 		this.level = level;
+		this.experience = experience;
+		this.health = health;
 		this.strength = strength;
 		this.defense = defense;
-		this.intelligence = intelligence;
 		this.dexterity = dexterity;
+		this.intelligence = intelligence;
 		this.maxHealth = maxHealth;
-		this.health = maxHealth;
 		this.speed = speed;
+		this.perception = perception;
+		this.willpower = willpower;
+		this.luck = luck;
+		this.karma = karma;
+		this.isHostile = isHostile;
+		this.isNPC = isNPC;
 		this.effects = effects;
-		
 	}
 	
 	/**

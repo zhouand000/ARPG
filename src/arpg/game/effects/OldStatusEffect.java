@@ -11,6 +11,7 @@ package arpg.game.effects;
  * 
  */
 @Deprecated
+@SuppressWarnings("all")
 public class OldStatusEffect extends Effect {
 	
 	public byte health;
@@ -32,10 +33,10 @@ public class OldStatusEffect extends Effect {
 	public StatusEffect (String name, String description) {
 		
 		// TODO Auto-generated constructor stub
-		super(name, description, remainingDuration, absorption);
+		super(name, description, remainingDuration, this.absorption);
 		
 	}
-	
+	*/
 	/**
 	 * @param name
 	 *            Effect name. If null,
@@ -93,3 +94,4 @@ public class OldStatusEffect extends Effect {
 	}
 	
 }
+*/
