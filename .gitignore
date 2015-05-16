@@ -5,6 +5,7 @@
 /.metadata/
 /.recommenders/
 *.class
+*.mp3
 
 # =========================
 # Java
