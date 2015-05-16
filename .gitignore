@@ -5,6 +5,7 @@
 /.metadata/
 /.recommenders/
 *.class
+*.mp3
 
 # =========================
 # Java
@@ -147,10 +148,13 @@ tramp
 # cask packages
 .cask/
 /bin/
-/bin/
-/bin/
-/bin/
-/bin/
-/bin/
-/bin/
-/bin/
+
+# Vi/Vim
+# =========================
+
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
