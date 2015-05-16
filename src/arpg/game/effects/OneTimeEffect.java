@@ -3,6 +3,8 @@
  */
 package arpg.game.effects;
 
+import arpg.game.modifier.*;
+
 /**
  * @author Andrew
  * 
@@ -15,11 +17,21 @@ public abstract class OneTimeEffect extends Effect {
 	public byte level;
 	
 	/**
+	 * 
+	 */
+	public OneTimeEffect () {
+		
+		super("", "", null);
+		level = 1;
+		
+	}
+	
+	/**
 	 * @param level
 	 */
 	public OneTimeEffect (byte level) {
 		
-		super("", "");
+		super("", "", null);
 		this.level = level;
 		
 	}
@@ -33,7 +45,21 @@ public abstract class OneTimeEffect extends Effect {
 		
 		// TODO Auto-generated constructor stub
 		
-		super(name, description);
+		super(name, description, null);
+		this.level = level;
+		
+	}
+	
+	/**
+	 * @param name
+	 * @param description
+	 * @param modifier
+	 * @param level
+	 */
+	public OneTimeEffect (String name, String description, Modifier modifier,
+			byte level) {
+		
+		super(name, description, modifier);
 		this.level = level;
 		
 	}
