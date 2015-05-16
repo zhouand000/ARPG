@@ -3,7 +3,7 @@
  */
 package arpg.game.effects;
 
-import arpg.game.modifier.*;
+import arpg.game.modifier.Modifier;
 
 /**
  * @author Andrew

@@ -3,7 +3,8 @@
  */
 package arpg.game.effects;
 
-import arpg.game.character.*;
+import arpg.game.character.StatMap;
+import arpg.game.modifier.Modifier;
 
 /**
  * @author Andrew
@@ -38,6 +39,16 @@ public class ItemEffect extends Effect {
 	 */
 	public boolean affectUser;
 	
-	
+	/**
+	 * @param name
+	 * @param description
+	 * @param modifier
+	 */
+	public ItemEffect (String name, String description, Modifier modifier) {
+		super(name, description, modifier);
+		
+		
+		
+	}
 	
 }
