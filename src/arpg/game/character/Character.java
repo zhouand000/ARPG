@@ -135,7 +135,7 @@ public class Character {
 	 */
 	public void applyEffects () {
 		
-		for (Effect e : effects) {
+		for (Effect e : this.effects) {
 			
 			applyEffect(e);
 			
@@ -153,7 +153,7 @@ public class Character {
 			applyEffect(e);
 			
 		}
-		effects.add(e);
+		this.effects.add(e);
 		
 	}
 	
@@ -162,13 +162,6 @@ public class Character {
 	 */
 	public void applyEffect (Effect e) {
 		
-		increaseLevel(e.level);
-		
-		this.experience += e.experience;
-		updateLevel();
-		
-		health += e.health;
-		maxHealth += e.maxHealth;
 		
 		// TODO Finish
 		
@@ -190,9 +183,9 @@ public class Character {
 	 */
 	private void updateLevel () {
 		
-		while (experience > (16 * 2 ^ level)) {
+		while (this.experience > (16 * 2 ^ this.level)) {
 			
-			level++;
+			this.level++;
 			
 		}
 		
@@ -205,8 +198,8 @@ public class Character {
 	 */
 	private void increaseLevel (int amount) {
 		
-		level += amount;
-		experience = 16 * 2 ^ level;
+		this.level += amount;
+		this.experience = 16 * 2 ^ this.level;
 		
 	}
 	
@@ -214,14 +207,14 @@ public class Character {
 	 * @return the experience
 	 */
 	public int getExperience () {
-		return experience;
+		return this.experience;
 	}
 	
 	/**
 	 * @return the level
 	 */
 	public byte getLevel () {
-		return level;
+		return this.level;
 	}
 	
 	/**
@@ -244,7 +237,7 @@ public class Character {
 	 * @return the health
 	 */
 	public int getHealth () {
-		return health;
+		return this.health;
 	}
 	
 	/**
@@ -259,7 +252,7 @@ public class Character {
 	 * @return the strength
 	 */
 	public byte getStrength () {
-		return strength;
+		return this.strength;
 	}
 	
 	/**
@@ -274,7 +267,7 @@ public class Character {
 	 * @return the defense
 	 */
 	public byte getDefense () {
-		return defense;
+		return this.defense;
 	}
 	
 	/**
@@ -289,7 +282,7 @@ public class Character {
 	 * @return the intelligence
 	 */
 	public byte getIntelligence () {
-		return intelligence;
+		return this.intelligence;
 	}
 	
 	/**
@@ -304,7 +297,7 @@ public class Character {
 	 * @return the dexterity
 	 */
 	public byte getDexterity () {
-		return dexterity;
+		return this.dexterity;
 	}
 	
 	/**
@@ -319,7 +312,7 @@ public class Character {
 	 * @return the maxHealth
 	 */
 	public byte getMaxHealth () {
-		return maxHealth;
+		return this.maxHealth;
 	}
 	
 	/**
@@ -334,7 +327,7 @@ public class Character {
 	 * @return the speed
 	 */
 	public byte getSpeed () {
-		return speed;
+		return this.speed;
 	}
 	
 	/**
@@ -349,7 +342,7 @@ public class Character {
 	 * @return the effects
 	 */
 	public ArrayList<Effect> getEffects () {
-		return effects;
+		return this.effects;
 	}
 	
 	/**

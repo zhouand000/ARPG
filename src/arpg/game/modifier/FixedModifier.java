@@ -3,7 +3,7 @@
  */
 package arpg.game.modifier;
 
-import arpg.game.character.Stat;
+import arpg.game.character.*;
 
 /**
  * @author Andrew
@@ -12,15 +12,22 @@ import arpg.game.character.Stat;
 public class FixedModifier extends Modifier {
 	
 	/**
-	 * @param s
-	 *            Name of the modified stat
 	 * 
 	 */
-	public FixedModifier (String s) {
+	public int amount;
+	
+	/**
+	 * @param s
+	 *            Name of the modified stat
+	 * @param amount
+	 * 
+	 */
+	public FixedModifier (String s, int amount) {
 		
 		// TODO Auto-generated constructor stub
 		
 		super(s);
+		this.amount = amount;
 		
 	}
 	
@@ -28,8 +35,11 @@ public class FixedModifier extends Modifier {
 	 * @see arpg.game.character.Modifier#applyModifier(arpg.game.character.Stat)
 	 */
 	@Override
-	public void applyModifier (Stat s) {
-		// TODO Auto-generated method stub
+	public void applyModifier (StatMap stats) {
+		
+		assert(stats != null);
+		
+		stats.get(this.type).current += this.amount;
 		
 	}
 	

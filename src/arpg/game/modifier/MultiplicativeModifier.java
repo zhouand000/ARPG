@@ -3,7 +3,7 @@
  */
 package arpg.game.modifier;
 
-import arpg.game.character.Stat;
+import arpg.game.character.*;
 
 /**
  * @author Andrew
@@ -17,8 +17,9 @@ public class MultiplicativeModifier extends Modifier {
 	public float amount;
 	
 	/**
-	 * @param s the name of the modified stat
-	 * @param amount 
+	 * @param s
+	 *            the name of the modified stat
+	 * @param amount
 	 * 
 	 */
 	public MultiplicativeModifier (String s, float amount) {
@@ -33,15 +34,13 @@ public class MultiplicativeModifier extends Modifier {
 	 * @see arpg.game.character.Modifier#applyModifier(arpg.game.character.Stat)
 	 */
 	@Override
-	public void applyModifier (Stat s) {
+	public void applyModifier (StatMap stats) {
 		
 		// TODO Auto-generated method stub
 		
-		assert(s != null);
+		assert (stats != null);
 		
-		s.current *= (amount + 1);
-		
-		
+		stats.get(this.type).current *= this.amount;
 		
 	}
 	

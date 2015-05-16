@@ -1,27 +1,25 @@
 /**
  * 
  */
-package arpg.assets.sounds;
+package arpg.game.sound;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
 
 /**
  * @author Andrew
  * 
  */
-public class TestProgram {
+public class SoundEngine {
+	
+	
 	
 	/**
 	 * 
 	 */
-	public TestProgram () {
+	public SoundEngine () {
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -73,6 +71,7 @@ public class TestProgram {
 		
 		// JOptionPane.showMessageDialog(null, "Done");
 		System.out.println("Done");
+		sc.close();
 		
 	}
 }

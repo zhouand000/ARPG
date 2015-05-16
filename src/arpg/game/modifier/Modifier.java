@@ -3,8 +3,7 @@
  */
 package arpg.game.modifier;
 
-import arpg.game.character.Stat;
-import arpg.game.character.StatType;
+import arpg.game.character.*;
 
 /**
  * @author Andrew
@@ -20,7 +19,9 @@ public abstract class Modifier {
 	/**
 	 * Protected modifier. Initialises statName to s
 	 * 
-	 * @param s
+	 * @param type
+	 * 
+	 * 
 	 */
 	protected Modifier (StatType type) {
 		
@@ -41,19 +42,18 @@ public abstract class Modifier {
 			throw new IllegalArgumentException(new NullPointerException("The argument typeString cannot be null"));
 		}
 		
-		
 		if (typeString.isEmpty()) {
 			throw new IllegalArgumentException("The argument typeString cannot be empty/contain only whitespace");
 		}
 		
-		// TODO Parse typeString
-		this.type = null;
+		this.type = StatType.lookupStatType(typeString);
 		
 	}
 	
 	/**
-	 * @param s
+	 * @param stats a map of stats
+	 * 
 	 */
-	public abstract void applyModifier (Stat s);
+	public abstract void applyModifier (StatMap stats);
 	
 }
