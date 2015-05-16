@@ -15,7 +15,7 @@ public enum StatType {
 	 * Level of the character
 	 */
 	// TODO Fill out like this
-	LEVEL (),
+	LEVEL(),
 	/**
 	 * Amount of experience
 	 */
@@ -124,10 +124,8 @@ public enum StatType {
 			case "KARMA":
 				return StatType.KARMA;
 			default:
+				return null;
 		}
-		
-		// TODO Finish method
-		return null;
 		
 	}
 	
