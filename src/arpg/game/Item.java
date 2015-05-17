@@ -30,6 +30,9 @@ public class Item {
 		this.name = name;
 		this.effect = effect;
 		effect.isTemporaryEffect = true;
+		effect.isPermanent = false;
+		effect.remainingDuration = -2;
+		
 	}
 	
 }

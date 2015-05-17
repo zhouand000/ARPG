@@ -31,16 +31,31 @@ public class Effect {
 	public byte intelligence;
 	
 	/**
-	 * The remaining duration.
+	 * The effect's remaining duration. Should be positive if the effect has a
+	 * set duration. When this reaches 0, the effect should be unapplied. If the
+	 * effect is permanent, this should be -1. If the effect is a semi-permanent
+	 * effect, this should be -2
 	 */
 	public byte remainingDuration;
 	
+	/**
+	 * If the effect should be permanently applied to the character
+	 */
 	public boolean isPermanent;
 	
+	/**
+	 * If the effect should only get applied, and removed when the duration ends
+	 */
 	public boolean isOneTimeEffect;
 	
+	/**
+	 * If the effect is temporary
+	 */
 	public boolean isTemporaryEffect;
 	
+	/**
+	 * If the effect is caused by an item or an ability
+	 */
 	public boolean isSemiPermanent;
 	
 	/**
@@ -63,7 +78,8 @@ public class Effect {
 	 *            The effect's remaining duration. Should be positive if the
 	 *            effect has a set duration. When this reaches 0, the effect
 	 *            should be unapplied. If the effect is permanent, this should
-	 *            be -1. If the effect is a
+	 *            be -1. If the effect is a semi-permanent effect, this should
+	 *            be -2
 	 * @param isPermanent
 	 * @param isOneTimeEffect
 	 *            Indicates if the effect is a one time effect; whether it
