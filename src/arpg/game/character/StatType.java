@@ -14,52 +14,51 @@ public enum StatType {
 	/**
 	 * Level of the character
 	 */
-	// TODO Fill out like this
-	LEVEL(),
+	LEVEL ("Level", "Lvl"),
 	/**
 	 * Amount of experience
 	 */
-	EXPERIENCE,
+	EXPERIENCE ("Experience", "Exp"),
 	/**
 	 * The character's health
 	 */
-	HEALTH,
+	HEALTH ("Health", "Hp"),
 	/**
 	 * The character's strength
 	 */
-	STRENGTH,
+	STRENGTH ("Strength", "Str"),
 	/**
 	 * The character's defense
 	 */
-	DEFENSE,
+	DEFENSE ("Defense", "Def"),
 	/**
 	 * The character's dexterity
 	 */
-	DEXTERITY,
+	DEXTERITY ("Dexterity", "Dex"),
 	/**
 	 * The character's intelligence
 	 */
-	INTELLIGENCE,
+	INTELLIGENCE ("Intelligence", "Int"),
 	/**
 	 * The character's speed
 	 */
-	SPEED,
+	SPEED ("Speed", "Spd"),
 	/**
 	 * The character's perception
 	 */
-	PERCEPTION,
+	PERCEPTION ("Perception", "Pcp"),
 	/**
 	 * The character's willpower
 	 */
-	WILLPOWER,
+	WILLPOWER ("Willpower", "Wil"),
 	/**
 	 * The character's luck
 	 */
-	LUCK,
+	LUCK ("Luck", "Lck"),
 	/**
 	 * The character's karma
 	 */
-	KARMA;
+	KARMA ("Karma", "Krm");
 	
 	/**
 	 * The name of the stat
