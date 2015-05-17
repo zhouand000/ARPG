@@ -129,6 +129,7 @@ public class Character {
 	
 	/**
 	 * Removes an effect
+	 * 
 	 * @param e
 	 */
 	public void unapplyEffect (Effect e) {
