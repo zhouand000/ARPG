@@ -5,6 +5,8 @@ package arpg.game;
 
 import java.util.ArrayList;
 
+import arpg.game.effects.Effect;
+
 /**
  * @author Andrew
  * 
