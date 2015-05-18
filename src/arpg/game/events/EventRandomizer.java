@@ -11,12 +11,6 @@ package arpg.game.events;
  */
 public class EventRandomizer {
 	
-<<<<<<< HEAD
-
-=======
-	
-	
->>>>>>> 7bb3b6dc2b7586b9da392da3af1631d6e36d480e
 	/**
 	 * 
 	 */
