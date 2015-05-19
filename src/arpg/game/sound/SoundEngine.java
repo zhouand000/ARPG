@@ -40,15 +40,19 @@ public class SoundEngine {
 	
 	ClassLoader loader = this.getClass().getClassLoader();
 	
+	Thread thread;
+	
 	/**
 	 * 
 	 */
-	public Deque<String> queue;
+	public LinkedList<String> queue;
 	
 	/**
 	 * The location of the sounds folder
 	 */
 	public static final String soundsFolderLocation = "arpg/assets/sounds/";
+	
+	boolean shouldStop;
 	
 	/**
 	 * 
@@ -64,19 +68,93 @@ public class SoundEngine {
 	}
 	
 	/**
+	 * @param args
+	 */
+	public static void main (String[] args) {
+		
+		SoundEngine engine = new SoundEngine();
+		Playlist p = new Playlist("TestList");
+		p.add("The Curtain Rises");
+		p.add("Discovery Hit");
+		
+		engine.playPlaylist(p);
+		
+	}
+	
+	/**
 	 * Resets the sound queue and adds p to the queue
 	 * 
 	 * @param p
+	 * 
 	 */
-	public void playPlaylist (final Playlist p) {
+	public <T extends List<String>> void playPlaylist (final T p) {
 		
-		stop();
-		queue = new LinkedList<String>(p);
-		while (!queue.isEmpty()) {
-			
-			playNextQueuedSound();
-			
+		if (thread.isAlive()) {
+			shouldStop = true;
+			try {
+				thread.join();
+			}
+			catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		
+		thread = new Thread(
+				new Runnable() {
+					@Override
+					public void run () {
+						if (clip != null && clip.isRunning()) {
+							stop();
+						}
+						queue = new LinkedList<String>(p);
+						String name;
+						try {
+							while (!shouldStop && !queue.isEmpty()) {
+								
+								name = queue.peekFirst();
+								
+								play(name);
+								
+								listener = new LineListener() {
+									
+									@Override
+									public void update (LineEvent event) {
+										
+										if (event.getType() == LineEvent.Type.STOP) {
+											queue.pollFirst();
+											clip.removeLineListener(listener);
+											System.out.println("DEBUG: Removing the first song from the queue");
+											// playNextQueuedSound();
+											
+										}
+										
+									}
+								};
+								
+								clip.addLineListener(listener);
+								
+								// playNextQueuedSound(); // TODO Fix?
+								
+								while (shouldStop && clip.isRunning()) {
+									// System.out.println("DEBUG: Playing Playlist");
+									Thread.sleep(10);
+									
+								}
+								// System.out.println("DEBUG: Done playing");
+								
+							}
+						}
+						catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				},
+				"SoundThread"
+				);
+		
+		thread.run();
 		
 	}
 	
@@ -86,6 +164,7 @@ public class SoundEngine {
 	public void playNextQueuedSound () {
 		
 		assert (queue.size() >= 1);
+		
 		String name = queue.peekFirst();
 		
 		play(name);
@@ -96,8 +175,10 @@ public class SoundEngine {
 			public void update (LineEvent event) {
 				
 				if (event.getType() == LineEvent.Type.STOP) {
-					queue.pop();
+					queue.pollFirst();
 					clip.removeLineListener(listener);
+					// playNextQueuedSound();
+					
 				}
 				
 			}
@@ -152,12 +233,14 @@ public class SoundEngine {
 			throw new IllegalArgumentException(name + "could not be found");
 		}
 		
-		location = soundsFolderLocation + soundMap;
+		location = soundsFolderLocation + location;
+		
+		URL url = loader.getResource(location);
 		
 		AudioInputStream ais;
 		
 		try {
-			ais = AudioSystem.getAudioInputStream(new URL(location));
+			ais = AudioSystem.getAudioInputStream(url);
 			
 			clipLength = (long) (ais.getFrameLength() / ais.getFormat().getFrameRate());
 			
