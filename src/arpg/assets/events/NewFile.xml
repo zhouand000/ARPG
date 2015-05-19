@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<event ID="Start" name="Start">
+<text>
+Tip: Pay attention to your choices, and each event's text. There may be useful information.
+</text>
+<choice>
+<text>Start.</text>
+</choice>
+</event>
+
+<event ID="MysteriousTemple" name="Mysterious Temple">
+<choice>
+<text>Enter.</text>
+<nextevent ID="InsideMysteriousTemple"/>
+</choice>
+<choice>
+<text>Continue.</text>
+</choice>
+
+</event>
