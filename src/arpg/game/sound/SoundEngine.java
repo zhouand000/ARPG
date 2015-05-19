@@ -89,7 +89,7 @@ public class SoundEngine {
 	 */
 	public <T extends List<String>> void playPlaylist (final T p) {
 		
-		if (thread.isAlive()) {
+		if (thread != null && thread.isAlive()) {
 			shouldStop = true;
 			try {
 				thread.join();
@@ -136,7 +136,7 @@ public class SoundEngine {
 								
 								// playNextQueuedSound(); // TODO Fix?
 								
-								while (shouldStop && clip.isRunning()) {
+								while (!shouldStop && clip.isRunning()) {
 									// System.out.println("DEBUG: Playing Playlist");
 									Thread.sleep(10);
 									
@@ -245,6 +245,7 @@ public class SoundEngine {
 			clipLength = (long) (ais.getFrameLength() / ais.getFormat().getFrameRate());
 			
 			clip = AudioSystem.getClip();
+			System.out.println("Open");
 			clip.open(ais);
 			
 		}
