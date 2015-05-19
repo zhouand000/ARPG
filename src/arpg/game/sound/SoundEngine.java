@@ -6,7 +6,7 @@ package arpg.game.sound;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.*;
 
 import javax.sound.sampled.*;
 
@@ -27,11 +27,23 @@ public class SoundEngine {
 	public Clip clip;
 	
 	/**
+	 * The length of the clip
+	 */
+	public long clipLength;
+	
+	LineListener listener;
+	
+	/**
 	 * 
 	 */
 	public boolean isCurrentlyPlaying = false;
 	
 	ClassLoader loader = this.getClass().getClassLoader();
+	
+	/**
+	 * 
+	 */
+	public Deque<String> queue;
 	
 	/**
 	 * The location of the sounds folder
@@ -46,12 +58,83 @@ public class SoundEngine {
 		
 		soundMap = new HashMap<String, String>();
 		initSoundMap();
-		try {
-			clip = AudioSystem.getClip();
+		
+		queue = new LinkedList<String>();
+		
+	}
+	
+	/**
+	 * Resets the sound queue and adds p to the queue
+	 * 
+	 * @param p
+	 */
+	public void playPlaylist (final Playlist p) {
+		
+		stop();
+		queue = new LinkedList<String>(p);
+		while (!queue.isEmpty()) {
+			
+			playNextQueuedSound();
+			
 		}
-		catch (LineUnavailableException e) {
-			e.printStackTrace();
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public void playNextQueuedSound () {
+		
+		assert (queue.size() >= 1);
+		String name = queue.peekFirst();
+		
+		play(name);
+		
+		listener = new LineListener() {
+			
+			@Override
+			public void update (LineEvent event) {
+				
+				if (event.getType() == LineEvent.Type.STOP) {
+					queue.pop();
+					clip.removeLineListener(listener);
+				}
+				
+			}
+		};
+		
+		clip.addLineListener(listener);
+		
+	}
+	
+	/**
+	 * @param name
+	 */
+	public void addToQueue (String name) {
+		
+		queue.addLast(name);
+		
+	}
+	
+	/**
+	 * @param list
+	 */
+	public void addToQueue (List<String> list) {
+		
+		for (String s : list) {
+			
+			queue.addLast(s);
+			
 		}
+		
+	}
+	
+	/**
+	 * Clears the queue
+	 */
+	public void resetSoundQueue () {
+		
+		queue.clear();
 		
 	}
 	
@@ -69,11 +152,18 @@ public class SoundEngine {
 			throw new IllegalArgumentException(name + "could not be found");
 		}
 		
+		location = soundsFolderLocation + soundMap;
+		
 		AudioInputStream ais;
 		
 		try {
 			ais = AudioSystem.getAudioInputStream(new URL(location));
+			
+			clipLength = (long) (ais.getFrameLength() / ais.getFormat().getFrameRate());
+			
+			clip = AudioSystem.getClip();
 			clip.open(ais);
+			
 		}
 		catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -94,6 +184,16 @@ public class SoundEngine {
 		
 		clip.start();
 		isCurrentlyPlaying = true;
+		
+	}
+	
+	/**
+	 * Stops the clip
+	 */
+	public void stop () {
+		
+		clip.stop();
+		clip.close();
 		
 	}
 	
@@ -118,6 +218,10 @@ public class SoundEngine {
 		soundMap.put("The Curtain Rises", "The Curtain Rises.wav");
 		soundMap.put("The Descent", "The Descent.wav");
 		soundMap.put("Video Dungeon Boss", "Video Dungeon Boss.wav");
+		
+	}
+	
+	void initPlaylists () {
 		
 	}
 	

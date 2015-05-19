@@ -5,7 +5,7 @@ package arpg.game;
 
 import java.util.ArrayList;
 
-import arpg.game.effects.*;
+import arpg.game.effects.ItemEffect;
 
 /**
  * @author Andrew
@@ -30,7 +30,8 @@ public class Item {
 	
 	/**
 	 * @param name
-	 * @param effect
+	 * @param description
+	 * @param arguments
 	 * 
 	 */
 	public Item (String name, String description, ItemEffect... arguments) {

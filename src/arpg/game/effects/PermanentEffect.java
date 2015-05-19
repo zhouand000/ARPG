@@ -3,12 +3,15 @@
  */
 package arpg.game.effects;
 
-import arpg.game.modifier.Modifier;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import arpg.game.effects.modifier.Modifier;
 
 /**
  * @author Andrew
  * 
  */
+@XmlRootElement
 public class PermanentEffect extends Effect {
 	
 	/**

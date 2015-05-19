@@ -5,4 +5,4 @@
  * @author Andrew
  * 
  */
-package arpg.game.modifier;
+package arpg.game.effects.modifier;

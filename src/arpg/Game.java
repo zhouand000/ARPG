@@ -3,7 +3,7 @@
  */
 package arpg;
 
-import arpg.game.events.*;
+import arpg.game.events.Event;
 
 /**
  * @author Andrew
@@ -25,8 +25,17 @@ public class Game {
 	 */
 	public void startGame () {
 		
-		
 		currentEvent = new Event("StartEvent", "Start Event", "Welcome to the realm of ARPG!");
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public void onTick () {
+		
+		
+		
 		
 	}
 	

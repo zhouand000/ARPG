@@ -1,11 +1,12 @@
 /**
  * 
  */
-package arpg.game.modifier;
+package arpg.game.effects.modifier;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-import arpg.game.character.*;
+import arpg.game.character.StatMap;
 
 /**
  * @author Andrew
@@ -26,7 +27,6 @@ public class ModifierContainer extends Modifier {
 	public ModifierContainer (String name, Modifier... modifiers) {
 		// TODO Auto-generated constructor stub
 		
-		super(name);
 		this.modifiers = new ArrayList<Modifier>(Arrays.asList(modifiers));
 		
 	}
@@ -39,7 +39,7 @@ public class ModifierContainer extends Modifier {
 		
 		assert (stats != null);
 		
-		for (Modifier m : this.modifiers) {
+		for (Modifier m : modifiers) {
 			
 			m.applyModifier(stats);
 			

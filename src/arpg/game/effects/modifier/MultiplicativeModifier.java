@@ -1,15 +1,15 @@
 /**
  * 
  */
-package arpg.game.modifier;
+package arpg.game.effects.modifier;
 
-import arpg.game.character.*;
+import arpg.game.character.StatMap;
 
 /**
  * @author Andrew
  * 
  */
-public class MultiplicativeModifier extends Modifier {
+public class MultiplicativeModifier extends SimpleModifier {
 	
 	/**
 	 * The effect of the modifier on the stat. Should be
@@ -40,7 +40,7 @@ public class MultiplicativeModifier extends Modifier {
 		
 		assert (stats != null);
 		
-		stats.get(this.type).current *= this.amount;
+		stats.get(type).current *= amount;
 		
 	}
 	

@@ -1,15 +1,16 @@
 /**
  * 
  */
-package arpg.game.modifier;
+package arpg.game.effects.modifier;
 
-import arpg.game.character.*;
+import arpg.game.character.StatMap;
+import arpg.game.character.StatType;
 
 /**
  * @author Andrew
  * 
  */
-public abstract class Modifier {
+public abstract class SimpleModifier extends Modifier {
 	
 	/**
 	 * Name of the stat modified
@@ -17,13 +18,13 @@ public abstract class Modifier {
 	public final StatType type;
 	
 	/**
-	 * Protected modifier. Initialises statName to s
+	 * Protected modifier.
 	 * 
 	 * @param type
 	 * 
 	 * 
 	 */
-	protected Modifier (StatType type) {
+	protected SimpleModifier (StatType type) {
 		
 		if (!(type != null)) {
 			throw new IllegalArgumentException("Exception occured while creating a Modifier object", new NullPointerException("StatType cannot be null"));
@@ -35,7 +36,7 @@ public abstract class Modifier {
 	/**
 	 * @param typeString
 	 */
-	protected Modifier (String typeString) {
+	protected SimpleModifier (String typeString) {
 		
 		typeString = typeString.trim();
 		if (!(typeString != null)) {
@@ -46,14 +47,16 @@ public abstract class Modifier {
 			throw new IllegalArgumentException("The argument typeString cannot be empty/contain only whitespace");
 		}
 		
-		this.type = StatType.lookupStatType(typeString);
+		type = StatType.lookupStatType(typeString);
 		
 	}
 	
 	/**
-	 * @param stats a map of stats
+	 * @param stats
+	 *            a map of stats
 	 * 
 	 */
+	@Override
 	public abstract void applyModifier (StatMap stats);
 	
 }

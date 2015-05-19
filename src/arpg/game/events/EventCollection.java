@@ -3,25 +3,31 @@
  */
 package arpg.game.events;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author Andrew
  * 
  */
-public class EventList {
+public class EventCollection {
 	
 	ArrayList<Event> eventList;
 	
 	Random rng = new Random(0L);
 	
 	/**
+	 * 
+	 */
+	public EventCollection () {
+		
+		eventList = new ArrayList<Event>();
+	}
+	
+	/**
 	 * @param arguments
 	 * 
 	 */
-	public EventList (Event... arguments) {
+	public EventCollection (Event... arguments) {
 		
 		eventList = new ArrayList<Event>(Arrays.asList(arguments));
 		
@@ -37,11 +43,16 @@ public class EventList {
 	}
 	
 	/**
-	 * @param e
+	 * @param arguments
+	 * 
 	 */
-	public void add (Event e) {
+	public void add (Event... arguments) {
 		
-		eventList.add(e);
+		for (Event e : arguments) {
+			
+			eventList.add(e);
+			
+		}
 		
 	}
 	

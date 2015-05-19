@@ -3,7 +3,6 @@
  */
 package arpg.game.character;
 
-// TODO Finish StatType Enum
 /**
  * 
  * @author Andrew
@@ -14,51 +13,51 @@ public enum StatType {
 	/**
 	 * Level of the character
 	 */
-	LEVEL ("Level", "Lvl"),
+	LEVEL("Level", "Lvl"),
 	/**
 	 * Amount of experience
 	 */
-	EXPERIENCE ("Experience", "Exp"),
+	EXPERIENCE("Experience", "Exp"),
 	/**
 	 * The character's health
 	 */
-	HEALTH ("Health", "Hp"),
+	HEALTH("Health", "Hp"),
 	/**
 	 * The character's strength
 	 */
-	STRENGTH ("Strength", "Str"),
+	STRENGTH("Strength", "Str"),
 	/**
 	 * The character's defense
 	 */
-	DEFENSE ("Defense", "Def"),
+	DEFENSE("Defense", "Def"),
 	/**
 	 * The character's dexterity
 	 */
-	DEXTERITY ("Dexterity", "Dex"),
+	DEXTERITY("Dexterity", "Dex"),
 	/**
 	 * The character's intelligence
 	 */
-	INTELLIGENCE ("Intelligence", "Int"),
+	INTELLIGENCE("Intelligence", "Int"),
 	/**
 	 * The character's speed
 	 */
-	SPEED ("Speed", "Spd"),
+	SPEED("Speed", "Spd"),
 	/**
 	 * The character's perception
 	 */
-	PERCEPTION ("Perception", "Pcp"),
+	PERCEPTION("Perception", "Pcp"),
 	/**
 	 * The character's willpower
 	 */
-	WILLPOWER ("Willpower", "Wil"),
+	WILLPOWER("Willpower", "Wil"),
 	/**
 	 * The character's luck
 	 */
-	LUCK ("Luck", "Lck"),
+	LUCK("Luck", "Lck"),
 	/**
 	 * The character's karma
 	 */
-	KARMA ("Karma", "Krm");
+	KARMA("Karma", "Krm");
 	
 	/**
 	 * The name of the stat
@@ -72,8 +71,8 @@ public enum StatType {
 	
 	private StatType () {
 		
-		this.name = "";
-		this.abbreviation = "";
+		name = "";
+		abbreviation = "";
 		
 	}
 	

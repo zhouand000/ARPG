@@ -20,7 +20,7 @@ public class Location {
 	/**
 	 * The list of possible events
 	 */
-	public final EventList events;
+	public final EventCollection events;
 	
 	/**
 	 * @param name
@@ -28,7 +28,7 @@ public class Location {
 	 *            List of events
 	 * 
 	 */
-	public Location (String name, EventList events) {
+	public Location (String name, EventCollection events) {
 		
 		// TODO Auto-generated constructor stub
 		
@@ -45,7 +45,7 @@ public class Location {
 	public Location (String name, Event... arguments) {
 		
 		this.name = name;
-		events = new EventList(arguments);
+		events = new EventCollection(arguments);
 		
 	}
 	

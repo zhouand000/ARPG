@@ -13,7 +13,10 @@ import java.util.Arrays;
 public class ChoiceList {
 	
 	// TODO Finish deciding on this
-	// static final Choice continueOn = new Choice("Continue. ");
+	/**
+	 * 
+	 */
+	public static final Choice continueOn = new Choice("Continue. ");
 	
 	// static final Choice doNothing = new Choice("Do nothing. ");
 	
