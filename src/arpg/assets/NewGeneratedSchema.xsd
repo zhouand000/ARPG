@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="modifier">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute type="xs:string" name="stat" use="optional" />
+					<xs:attribute type="xs:string" name="type" use="optional" />
+					<xs:attribute type="xs:string" name="amount" use="optional" />
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="eventref">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute type="xs:string" name="ID" />
+					<xs:attribute type="xs:string" name="name" />
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="region">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute type="xs:string" name="any" />
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="text" type="xs:string" />
+	<xs:element name="effect">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="modifier" />
+			</xs:sequence>
+			<xs:attribute type="xs:string" name="type" use="optional" />
+			<xs:attribute type="xs:string" name="name" use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="biome" type="xs:string" />
+	<xs:element name="choice">
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element ref="text" minOccurs="0" />
+				<xs:element ref="eventref" minOccurs="0" />
+				<xs:element ref="event" minOccurs="0" />
+				<xs:element ref="effect" maxOccurs="unbounded" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="location">
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element ref="biome" maxOccurs="unbounded" minOccurs="0" />
+				<xs:element ref="place" minOccurs="0" />
+				<xs:element ref="region" minOccurs="0" />
+			</xs:sequence>
+			<xs:attribute type="xs:string" name="biome" use="optional" />
+			<xs:attribute type="xs:string" name="location" use="optional" />
+			<xs:attribute type="xs:string" name="region" use="optional" />
+			<xs:attribute type="xs:string" name="name" use="optional" />
+			<xs:attribute type="xs:string" name="load" use="optional" />
+			<xs:attribute type="xs:string" name="replace" use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="event">
+		<xs:complexType mixed="true">
+			<xs:choice maxOccurs="unbounded" minOccurs="0">
+				<xs:element ref="location" />
+				<xs:element ref="text" />
+				<xs:element ref="choice" />
+				<xs:element ref="sound" />
+			</xs:choice>
+			<xs:attribute type="xs:string" name="ID" use="optional" />
+			<xs:attribute type="xs:string" name="name" use="optional" />
+			<xs:attribute type="xs:string" name="standalone" use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="sound">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute type="xs:string" name="load" use="optional" />
+					<xs:attribute type="xs:string" name="replace" use="optional" />
+					<xs:attribute type="xs:string" name="ID" use="optional" />
+					<xs:attribute type="xs:string" name="name" use="optional" />
+					<xs:attribute type="xs:string" name="src" use="optional" />
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="soundlist">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="sound" maxOccurs="unbounded" minOccurs="0" />
+			</xs:sequence>
+			<xs:attribute type="xs:string" name="ID" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="place" type="xs:string" />
+	<xs:element name="resourcefile">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="event" maxOccurs="unbounded" minOccurs="0" />
+				<xs:element ref="sound" maxOccurs="unbounded" minOccurs="0" />
+				<xs:element ref="soundlist" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>

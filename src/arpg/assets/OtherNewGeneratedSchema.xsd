@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <xs:element name="resourcefile" type="resourcefileType"/>
+  <xs:complexType name="locationType" mixed="true">
+    <xs:sequence>
+      <xs:element type="xs:string" name="biome" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="xs:string" name="place" minOccurs="0"/>
+      <xs:element type="regionType" name="region" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="biome" use="optional"/>
+    <xs:attribute type="xs:string" name="location" use="optional"/>
+    <xs:attribute type="xs:string" name="region" use="optional"/>
+    <xs:attribute type="xs:string" name="name" use="optional"/>
+    <xs:attribute type="xs:string" name="load" use="optional"/>
+    <xs:attribute type="xs:string" name="replace" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="choiceType" mixed="true">
+    <xs:sequence>
+      <xs:element type="xs:string" name="text" minOccurs="0"/>
+      <xs:element type="eventrefType" name="eventref" minOccurs="0"/>
+      <xs:element type="eventType" name="event" minOccurs="0"/>
+      <xs:element type="effectType" name="effect" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="eventType" mixed="true">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:element type="locationType" name="location"/>
+      <xs:element type="xs:string" name="text"/>
+      <xs:element type="choiceType" name="choice"/>
+      <xs:element type="soundType" name="sound"/>
+    </xs:choice>
+    <xs:attribute type="xs:string" name="ID" use="optional"/>
+    <xs:attribute type="xs:string" name="name" use="optional"/>
+    <xs:attribute type="xs:string" name="standalone" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="regionType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="any"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="soundType" mixed="true">
+    <xs:sequence>
+      <xs:element type="xs:string" name="biome" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="xs:string" name="place" minOccurs="0"/>
+      <xs:element type="regionType" name="region" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="load" use="optional"/>
+    <xs:attribute type="xs:string" name="replace" use="optional"/>
+    <xs:attribute type="xs:string" name="biome" use="optional"/>
+    <xs:attribute type="xs:string" name="location" use="optional"/>
+    <xs:attribute type="xs:string" name="region" use="optional"/>
+    <xs:attribute type="xs:string" name="name" use="optional"/>
+    <xs:attribute type="xs:string" name="ID" use="optional"/>
+    <xs:attribute type="xs:string" name="src" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="eventrefType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="ID"/>
+        <xs:attribute type="xs:string" name="name"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="modifierType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="stat" use="optional"/>
+        <xs:attribute type="xs:string" name="type" use="optional"/>
+        <xs:attribute type="xs:string" name="amount" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="effectType">
+    <xs:sequence>
+      <xs:element type="modifierType" name="modifier"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="type" use="optional"/>
+    <xs:attribute type="xs:string" name="name" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="soundlistType">
+    <xs:sequence>
+      <xs:element type="soundType" name="sound" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="ID"/>
+  </xs:complexType>
+  <xs:complexType name="resourcefileType">
+    <xs:sequence>
+      <xs:element type="eventType" name="event" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="soundType" name="sound" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="soundlistType" name="soundlist"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+
