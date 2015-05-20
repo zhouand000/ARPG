@@ -3,12 +3,16 @@
  */
 package arpg.game.sound;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.*;
+import java.net.*;
 import java.util.*;
 
 import javax.sound.sampled.*;
+import javax.xml.parsers.*;
+
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * @author Andrew
@@ -20,6 +24,11 @@ public class SoundEngine {
 	 * Maps Strings to the file location
 	 */
 	public final HashMap<String, String> soundMap;
+	
+	/**
+	 * 
+	 */
+	public final HashMap<String, Playlist> playlistMap;
 	
 	/**
 	 * The clip
@@ -55,15 +64,23 @@ public class SoundEngine {
 	boolean shouldStop;
 	
 	/**
+	 * The path to the Sounds file. Should point directly to the Sounds file
+	 */
+	public static String pathToSoundsFile = "arpg/assets/sounds/Sounds.xml";
+	
+	/**
 	 * 
 	 */
 	public SoundEngine () {
 		// TODO Auto-generated constructor stub
 		
 		soundMap = new HashMap<String, String>();
-		initSoundMap();
+		// initSoundMap();
 		
 		queue = new LinkedList<String>();
+		playlistMap = new HashMap<String, Playlist>();
+		
+		initSoundResourcesFromXML();
 		
 	}
 	
@@ -73,6 +90,10 @@ public class SoundEngine {
 	public static void main (String[] args) {
 		
 		SoundEngine engine = new SoundEngine();
+		
+		System.out.println(engine.soundMap);
+		System.out.println(engine.playlistMap);
+		
 		Playlist p = new Playlist("TestList");
 		p.add("The Curtain Rises");
 		p.add("Discovery Hit");
@@ -281,6 +302,45 @@ public class SoundEngine {
 		
 	}
 	
+	void initSoundResourcesFromXML () {
+		
+		SAXParserFactory spf = SAXParserFactory.newInstance();
+		SAXParser sp;
+		
+		try {
+			URL url = loader.getResource(pathToSoundsFile);
+			InputStream is;
+			try {
+				is = new FileInputStream(new File(url.toURI()));
+			}
+			catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return;
+			}
+			sp = spf.newSAXParser();
+			SoundXMLHandler sxh = new SoundXMLHandler();
+			sp.parse(is, sxh);
+		}
+		catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	void initSoundMap () {
 		
 		soundMap.put("8bit Dungeon Boss", "8bit Dungeon Boss.wav");
@@ -306,6 +366,101 @@ public class SoundEngine {
 	}
 	
 	void initPlaylists () {
+		
+	}
+	
+	/**
+	 * @author Andrew
+	 * 
+	 */
+	public class SoundXMLHandler extends DefaultHandler {
+		
+		/**
+		 * 
+		 */
+		public Stack<String> elementStack = new Stack<String>();
+		
+		/**
+		 * 
+		 */
+		public Stack<Object> objectStack = new Stack<Object>();
+		
+		/**
+		 * 
+		 */
+		public SoundXMLHandler () {
+			// TODO Auto-generated constructor stub
+		}
+		
+		/* (non-Javadoc)
+		 * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
+		 */
+		@Override
+		public void startElement (String uri, String localName, String qName,
+				Attributes attributes) throws SAXException {
+			
+			// TODO Auto-generated method stub
+			
+			elementStack.push(qName);
+			
+			switch (qName) {
+			
+				case "sound":
+					
+					if (attributes.getIndex("load") != -1) {
+						Object o = objectStack.peek();
+						if (o instanceof Playlist) {
+							((Playlist) o).add(attributes.getValue("load"));
+						}
+					}
+					else if (attributes.getIndex("name") != -1
+							&& attributes.getIndex("src") != -1) {
+						soundMap.put(attributes.getValue("name"), attributes.getValue("src"));
+					}
+					
+					break;
+				case "soundlist":
+					if (attributes.getIndex("ID") != -1
+							&& !attributes.getValue("ID").trim().isEmpty()) {
+						objectStack.push(new Playlist(attributes.getIndex("name") != -1
+								&& !attributes.getValue("name").trim().isEmpty()
+								? attributes.getValue("name").trim()
+								: attributes.getValue("ID")));
+					}
+					break;
+			}
+			
+		}
+		
+		/* (non-Javadoc)
+		 * @see org.xml.sax.helpers.DefaultHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
+		 */
+		@Override
+		public void endElement (String uri, String localName, String qName)
+				throws SAXException {
+			
+			elementStack.pop();
+			if (qName == "soundlist") {
+				System.out.println(((Playlist) objectStack.peek()).name);
+				// printStack(objectStack);
+				playlistMap.put(((Playlist) objectStack.peek()).name, (Playlist) objectStack.pop());
+			}
+			
+		}
+		
+		/**
+		 * @param <T>
+		 * @param s
+		 * 
+		 */
+		public <T> void printStack (Stack<T> s) {
+			// TODO Auto-generated method stub
+			
+			for (T t : s) {
+				System.out.println(t);
+			}
+			
+		}
 		
 	}
 	

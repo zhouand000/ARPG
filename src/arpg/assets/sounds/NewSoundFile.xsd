@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema attributeFormDefault="unqualified"
-	elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-	<xs:element name="soundfiles" type="soundfilesType" />
+	elementFormDefault="qualified" targetNamespace="http://www.w3schools.com"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="soundfiles" type="w3s:soundfilesType"
+		xmlns:w3s="http://www.w3schools.com" />
 	<xs:complexType name="soundType">
 		<xs:simpleContent>
 			<xs:extension base="xs:string">
@@ -14,17 +16,18 @@
 	</xs:complexType>
 	<xs:complexType name="soundfilesType">
 		<xs:sequence>
-			<xs:element type="soundType" name="sound" maxOccurs="unbounded"
-				minOccurs="0" />
-			<xs:element type="soundlistType" name="soundlist" />
+			<xs:element type="w3s:soundType" name="sound" maxOccurs="unbounded"
+				minOccurs="0" xmlns:w3s="http://www.w3schools.com" />
+			<xs:element type="w3s:soundlistType" name="soundlist"
+				xmlns:w3s="http://www.w3schools.com" />
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="soundlistType">
 		<xs:sequence>
-			<xs:element type="soundType" name="sound" maxOccurs="unbounded"
-				minOccurs="0" />
+			<xs:element type="w3s:soundType" name="sound" maxOccurs="unbounded"
+				minOccurs="0" xmlns:w3s="http://www.w3schools.com" />
 		</xs:sequence>
 		<xs:attribute type="xs:string" name="ID" />
-		<xs:attribute type="xs:string" name="name"/>
+		<xs:attribute type="xs:string" name="name" />
 	</xs:complexType>
 </xs:schema>

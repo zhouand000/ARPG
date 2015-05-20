@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <soundfiles xmlns="http://www.w3schools.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="./EventFile.xsd">
+	xsi:schemaLocation="file:./EventFile.xsd">
 	<sound ID="8bit Dungeon Boss" name="8bit Dungeon Boss"
 		src="arpg/assets/sounds/8bit Dungeon Boss.wav" />
 	<sound ID="Adventure Meme" name="Adventure Meme"
@@ -33,7 +33,7 @@
 	<sound ID="Video Dungeon Boss" name="Video Dungeon Boss"
 		src="arpg/assets/sounds/Video Dungeon Boss.wav" />
 
-	<soundlist ID="DARK">
+	<soundlist ID="DARK" name="Dark">
 		<sound load="Tempting Secrets" />
 		<sound load="The Complex" />
 		<sound load="Black Vortex" />

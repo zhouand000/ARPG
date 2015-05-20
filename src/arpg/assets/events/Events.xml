@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <eventfile xmlns="http://www.w3schools.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="./EventFile.xsd">
+	xsi:schemaLocation="file:./EventFile.xsd">
 
 	<event ID="Start" name="Start" standalone="true">
 		<location biome="$(ANY)" location="Empty" region="$(ANY)" />
