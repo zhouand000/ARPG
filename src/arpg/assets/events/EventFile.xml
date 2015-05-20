@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<eventfile xmlns="http://www.w3schools.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="./EventFile">
+
+	<event ID="Start" name="Start" standalone="true">
+		<location biome="$(ANY)" location="Empty" region="$(ANY)" />
+		<text>
+			Tip: Pay attention to your choices, and each event's text. There
+			may be
+			useful information.
+		</text>
+		<choice>
+			<text>Start.</text>
+		</choice>
+	</event>
+
+	<event ID="MysteriousTemple" name="Mysterious Temple" standalone="true">
+		<location name="Mysterious Temple">
+			<biome>Forest</biome>
+			<biome>Jungle</biome>
+			<biome>Desert</biome>
+			<biome>Mountain</biome>
+			<place>Mysterious Temple Exterior</place>
+			<region any="true" />
+		</location>
+		<sound load="$(List.DARK)" />
+		<location load="$(this.location)" replace="true" />
+		<sound load="$(this.soundlist)" replace="true" />
+		<text>You arrive at a mysterious temple.</text>
+		<choice>
+			<text>Enter.</text>
+			<eventref ID="InsideMysteriousTemple" name="Mysterious Temple" />
+		</choice>
+		<choice>
+			<text>Leave.</text>
+		</choice>
+	</event>
+
+	<event ID="InsideMysteriousTemple" name="Inside the Mysterious Temple"
+		standalone="false">
+		<location>
+			<place>Mysterious Temple Interior</place>
+		</location>
+
+		<location load="$(this.location)" replace="false" />
+		<sound replace="false" />
+		<text>There are two doors, plus the exit.</text>
+		<choice>
+			Take the left door.
+			<event>
+				A teleport trap activates, and returns you to the outside of the
+				temple. The temple door seals behind you.
+				<choice>
+					<text>Continue.</text>
+				</choice>
+			</event>
+		</choice>
+		<choice>
+			<text>The door leads to a pit.</text>
+			<effect type="OneTime">
+				<modifier stat="Health" type="multiplicative" amount="50%" />
+			</effect>
+			<effect name="Broken Leg" type="Status">
+				<modifier stat="speed" type="multiplicative" amount="50%" />
+			</effect>
+		</choice>
+
+	</event>
+
+</eventfile>
