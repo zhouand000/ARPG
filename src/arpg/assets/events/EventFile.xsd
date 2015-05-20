@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified" targetNamespace="http://www.w3schools.com"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="eventfile" type="w3s:eventfileType"
+		xmlns:w3s="http://www.w3schools.com" />
+	<xs:complexType name="choiceType" mixed="true">
+		<xs:sequence>
+			<xs:element type="xs:string" name="text" minOccurs="0" />
+			<xs:element type="w3s:eventrefType" name="eventref"
+				minOccurs="0" xmlns:w3s="http://www.w3schools.com" />
+			<xs:element type="w3s:eventType" name="event" minOccurs="0"
+				xmlns:w3s="http://www.w3schools.com" />
+			<xs:element type="w3s:effectType" name="effect" maxOccurs="unbounded"
+				minOccurs="0" xmlns:w3s="http://www.w3schools.com" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="soundType" mixed="true">
+		<xs:sequence>
+			<xs:element type="xs:string" name="biome" maxOccurs="unbounded"
+				minOccurs="0" />
+			<xs:element type="xs:string" name="place" minOccurs="0" />
+			<xs:element type="w3s:regionType" name="region" minOccurs="0"
+				xmlns:w3s="http://www.w3schools.com" />
+		</xs:sequence>
+		<xs:attribute type="xs:string" name="load" use="optional" />
+		<xs:attribute type="xs:string" name="replace" use="optional" />
+		<xs:attribute type="xs:string" name="biome" use="optional" />
+		<xs:attribute type="xs:string" name="location" use="optional" />
+		<xs:attribute type="xs:string" name="region" use="optional" />
+		<xs:attribute type="xs:string" name="name" use="optional" />
+	</xs:complexType>
+	<xs:complexType name="modifierType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute type="xs:string" name="stat" use="optional" />
+				<xs:attribute type="xs:string" name="type" use="optional" />
+				<xs:attribute type="xs:string" name="amount" use="optional" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="locationType" mixed="true">
+		<xs:sequence>
+			<xs:element type="xs:string" name="biome" maxOccurs="unbounded"
+				minOccurs="0" />
+			<xs:element type="xs:string" name="place" minOccurs="0" />
+			<xs:element type="w3s:regionType" name="region" minOccurs="0"
+				xmlns:w3s="http://www.w3schools.com" />
+		</xs:sequence>
+		<xs:attribute type="xs:string" name="biome" use="optional" />
+		<xs:attribute type="xs:string" name="location" use="optional" />
+		<xs:attribute type="xs:string" name="region" use="optional" />
+		<xs:attribute type="xs:string" name="name" use="optional" />
+		<xs:attribute type="xs:string" name="load" use="optional" />
+		<xs:attribute type="xs:string" name="replace" use="optional" />
+	</xs:complexType>
+	<xs:complexType name="eventfileType">
+		<xs:sequence>
+			<xs:element type="w3s:eventType" name="event" maxOccurs="unbounded"
+				minOccurs="0" xmlns:w3s="http://www.w3schools.com" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventType" mixed="true">
+		<xs:choice maxOccurs="unbounded" minOccurs="0">
+			<xs:element type="w3s:locationType" name="location"
+				xmlns:w3s="http://www.w3schools.com" />
+			<xs:element type="xs:string" name="text" />
+			<xs:element type="w3s:choiceType" name="choice"
+				xmlns:w3s="http://www.w3schools.com" />
+			<xs:element type="w3s:soundType" name="sound"
+				xmlns:w3s="http://www.w3schools.com" />
+		</xs:choice>
+		<xs:attribute type="xs:string" name="ID" use="optional" />
+		<xs:attribute type="xs:string" name="name" use="optional" />
+		<xs:attribute type="xs:string" name="standalone" use="optional" />
+	</xs:complexType>
+	<xs:complexType name="eventrefType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute type="xs:string" name="ID" />
+				<xs:attribute type="xs:string" name="name" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="effectType">
+		<xs:sequence>
+			<xs:element type="w3s:modifierType" name="modifier"
+				xmlns:w3s="http://www.w3schools.com" />
+		</xs:sequence>
+		<xs:attribute type="xs:string" name="type" use="optional" />
+		<xs:attribute type="xs:string" name="name" use="optional" />
+	</xs:complexType>
+	<xs:complexType name="regionType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute type="xs:string" name="any" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>
