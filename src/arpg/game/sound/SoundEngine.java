@@ -341,6 +341,10 @@ public class SoundEngine {
 		
 	}
 	
+	/**
+	 * Initialises the sound mappings
+	 */
+	@Deprecated
 	void initSoundMap () {
 		
 		soundMap.put("8bit Dungeon Boss", "8bit Dungeon Boss.wav");

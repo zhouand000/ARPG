@@ -9,7 +9,7 @@ import java.util.*;
  * @author Andrew
  * 
  */
-public class EventCollection {
+public class EventGroup {
 	
 	ArrayList<Event> eventList;
 	
@@ -18,7 +18,7 @@ public class EventCollection {
 	/**
 	 * 
 	 */
-	public EventCollection () {
+	public EventGroup () {
 		
 		eventList = new ArrayList<Event>();
 	}
@@ -27,7 +27,7 @@ public class EventCollection {
 	 * @param arguments
 	 * 
 	 */
-	public EventCollection (Event... arguments) {
+	public EventGroup (Event... arguments) {
 		
 		eventList = new ArrayList<Event>(Arrays.asList(arguments));
 		

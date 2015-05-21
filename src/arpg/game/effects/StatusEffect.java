@@ -3,9 +3,6 @@
  */
 package arpg.game.effects;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import arpg.game.annotations.Required;
 import arpg.game.effects.modifier.BlankModifier;
 import arpg.game.effects.modifier.Modifier;
@@ -14,7 +11,6 @@ import arpg.game.effects.modifier.Modifier;
  * @author Andrew
  * 
  */
-@XmlRootElement
 public class StatusEffect extends Effect {
 	
 	/**
@@ -29,7 +25,6 @@ public class StatusEffect extends Effect {
 	/**
 	 * 
 	 */
-	@XmlElement
 	public int maxDuration;
 	
 	/**

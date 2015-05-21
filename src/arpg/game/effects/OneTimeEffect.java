@@ -3,22 +3,17 @@
  */
 package arpg.game.effects;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import arpg.game.effects.modifier.Modifier;
 
 /**
  * @author Andrew
  * 
  */
-@XmlRootElement
 public abstract class OneTimeEffect extends Effect {
 	
 	/**
 	 * The level of the effect
 	 */
-	@XmlElement
 	public byte level;
 	
 	/**
