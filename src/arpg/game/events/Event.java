@@ -13,9 +13,15 @@ import arpg.game.sound.Playlist;
  * @author Andrew
  * 
  */
+/**
+ * @author Andrew
+ * 
+ */
 public class Event {
 	
-	@SuppressWarnings("javadoc")
+	/**
+	 * 
+	 */
 	public static final ChoiceList CONTINUE_ON = new ChoiceList(ChoiceList.continueOn);
 	
 	//	static final ChoiceList DO_NOTHING = new ChoiceList(ChoiceList.doNothing);
@@ -177,6 +183,31 @@ public class Event {
 		}
 		
 		playlist = new Playlist(name);
+		
+	}
+	
+	/**
+	 * @param ID
+	 * @param name
+	 * @param text
+	 * @param choices
+	 * @param effect
+	 * @param isHidden
+	 * @param playlist
+	 * 
+	 */
+	public Event (String ID, String name, String text, ChoiceList choices,
+			Effect effect, boolean isHidden, Playlist playlist) {
+		
+		// TODO Auto-generated constructor stub
+		
+		this.ID = ID;
+		this.name = name;
+		this.text = text;
+		this.choices = choices;
+		this.effect = effect;
+		this.isHidden = isHidden;
+		this.playlist = playlist;
 		
 	}
 	
