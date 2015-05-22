@@ -1,16 +1,20 @@
 package arpg;
+
+import java.util.logging.Logger;
+
 /**
  * 
  */
 
-
 /**
- * @author
- * Main
+ * @author Main
  */
 public class ARPG {
 	
-	
+	/**
+	 * The logger instance for ARPG
+	 */
+	public static Logger logger = Logger.getLogger("Game Logger");
 	
 	/**
 	 * 

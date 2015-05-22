@@ -3,8 +3,15 @@
  */
 package arpg.game.events;
 
+import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.*;
 
+import javax.xml.parsers.*;
+
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import arpg.game.effects.Effect;
@@ -19,20 +26,27 @@ public class EventFactory {
 	/**
 	 * HashMap mapping event IDs to events
 	 */
-	public HashMap<String, Event> eventMap;
+	public HashMap<String, EventPrototype> eventMap;
 	
 	/**
 	 * HashMap mapping event group IDs to EventGroups
 	 */
+	public HashMap<String, EventGroupPrototype> eventGroupMap;
+	
+	ClassLoader loader = this.getClass().getClassLoader();
+	
+	public static String pathToEventsFile = "arpg/assets/events/Events.xml";
 	public HashMap<String, EventGroup> eventGroupMap;
 	
 	/**
 	 * 
 	 */
 	public EventFactory () {
+		
 		// TODO Auto-generated constructor stub
-		eventMap = new HashMap<String, Event>();
-		eventGroupMap = new HashMap<String, EventGroup>();
+		eventMap = new HashMap<String, EventPrototype>();
+		eventGroupMap = new HashMap<String, EventGroupPrototype>();
+		init();
 		
 	}
 	
@@ -41,9 +55,76 @@ public class EventFactory {
 	 */
 	public static void main (String[] args) {
 		
+		
 	}
 	
-	void initEvents () {
+	void init () {
+		
+		SAXParserFactory spf = SAXParserFactory.newInstance();
+		SAXParser sp;
+		
+		try {
+			URL url = loader.getResource(pathToEventsFile);
+			InputStream is = new FileInputStream(new File(url.toURI()));
+			sp = spf.newSAXParser();
+			EventXMLHandler exh = new EventXMLHandler();
+			sp.parse(is, exh);
+			System.out.println("Done parsing");
+		}
+		catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+	void init () {
+		
+		SAXParserFactory spf = SAXParserFactory.newInstance();
+		SAXParser sp;
+		
+		try {
+			URL url = loader.getResource(pathToEventsFile);
+			InputStream is = new FileInputStream(new File(url.toURI()));
+			sp = spf.newSAXParser();
+			EventXMLHandler exh = new EventXMLHandler();
+			sp.parse(is, exh);
+			System.out.println("Done parsing");
+		}
+		catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -63,6 +144,8 @@ public class EventFactory {
 		 */
 		public Stack<Object> objectStack;
 		
+		public EventGroupPrototype prototype;
+		
 		/**
 		 * 
 		 */
@@ -71,6 +154,115 @@ public class EventFactory {
 			
 			elementStack = new Stack<String>();
 			objectStack = new Stack<Object>();
+			
+		}
+		
+		/* (non-Javadoc)
+		 * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
+		 */
+		@Override
+		public void startElement (String uri, String localName, String qName,
+				Attributes attributes) throws SAXException {
+			
+			// TODO Auto-generated method stub
+			
+			elementStack.push(qName);
+			
+			System.out.println(elementStack.size() > 2
+					? "Parent: " + elementStack.get(elementStack.size() - 2)
+							+ " Child: " + elementStack.peek() : "Element: "
+							+ elementStack.peek());
+			
+			if (qName == "eventfile") {
+				
+				// NO-OP
+				return;
+				
+			}
+			
+			if (qName == "event") {
+				
+				if (attributes.getIndex("ID") != -1
+						&& attributes.getIndex("name") != -1) {
+					
+					if (elementStack.size() > 2
+							&& elementStack.get(elementStack.size() - 2) == "eventList") {
+						
+						EventPrototype ep = new EventPrototype();
+						objectStack.push(ep);
+						
+					}
+					
+				}
+				
+			}
+			
+		}
+	}
+	
+	/**
+	 * @author Andrew
+	 * 
+	 */
+	public class EventGroupPrototype {
+		
+		/**
+		 * ID of the Event
+		 */
+		public String ID;
+		
+		/**
+		 * Name of the Event
+		 */
+		public String name;
+		
+		ArrayList<EventPrototype> eventList;
+		
+		Random rng = new Random(0L);
+		
+		/**
+		 * 
+		 */
+		public EventGroupPrototype () {
+			
+			eventList = new ArrayList<EventPrototype>();
+		}
+		
+		/**
+		 * @param arguments
+		 * 
+		 */
+		public EventGroupPrototype (EventPrototype... arguments) {
+			
+			eventList = new ArrayList<EventPrototype>(Arrays.asList(arguments));
+			
+		}
+		
+		/**
+		 * @param arguments
+		 * 
+		 */
+		public void add (EventPrototype... arguments) {
+			
+			for (EventPrototype e : arguments) {
+				
+				eventList.add(e);
+				
+			}
+			
+		}
+		
+		/**
+		 * @return
+		 */
+		public EventGroup toEventGroup () {
+			
+			ArrayList<Event> output = new ArrayList<Event>();
+			for (EventPrototype ep : eventList) {
+				
+				output.add(ep.toEvent());
+			}
+			return new EventGroup(ID, name, output);
 			
 		}
 		
@@ -122,7 +314,7 @@ public class EventFactory {
 		 */
 		public Event toEvent () {
 			
-			return new Event(ID, name, text, choices, effect, isHidden, playlist);
+			return new Event(ID, name, text, choices.toChoiceList(), effect, isHidden, playlist);
 			
 		}
 		
@@ -198,13 +390,21 @@ public class EventFactory {
 			
 		}
 		
+		/**
+		 * @return
+		 */
 		public ChoiceList toChoiceList () {
-			return new ChoiceList(name, choices);
 			
-			
+			ArrayList<Choice> choiceArrayList = new ArrayList<Choice>();
+			for (ChoicePrototype cp : choices) {
+				
+				choiceArrayList.add(cp.toChoice());
+				
+			}
+			return new ChoiceList(choiceArrayList);
 			
 		}
-		
+
 	}
 	
 	/**
@@ -222,7 +422,7 @@ public class EventFactory {
 		 * A list of possible events
 		 * 
 		 */
-		public final EventGroup nextEvent;
+		public final EventGroupPrototype nextEvent;
 		
 		/**
 		 * 
@@ -239,21 +439,28 @@ public class EventFactory {
 		 * @param text
 		 * @param arguments
 		 */
-		public ChoicePrototype (String text, Event... arguments) {
+		public ChoicePrototype (String text, EventPrototype... arguments) {
 			
 			this.text = text;
-			nextEvent = new EventGroup(arguments);
-			
-		}
-		
+			nextEvent = new EventGroupPrototype(arguments);
+}
 		/**
 		 * @param text
 		 * @param nextEvent
 		 */
-		public ChoicePrototype (String text, EventGroup nextEvent) {
+		public ChoicePrototype (String text, EventGroupPrototype nextEvent) {
 			
 			this.text = text;
 			this.nextEvent = nextEvent;
+			
+		}
+		
+		/**
+		 * @return
+		 */
+		public Choice toChoice () {
+			
+			return new Choice(text, nextEvent.toEventGroup());
 			
 		}
 		

@@ -25,9 +25,7 @@
 				minOccurs="0" />
 		</xs:sequence>
 		<xs:attribute type="xs:string" name="ID" />
-<<<<<<< HEAD
-=======
 		<xs:attribute type="xs:string" name="name"/>
->>>>>>> 5da592098539109aa26291bc14abad93cf125337
+		<xs:attribute type="xs:string" name="name"/>
 	</xs:complexType>
 </xs:schema>

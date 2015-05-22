@@ -309,15 +309,7 @@ public class SoundEngine {
 		
 		try {
 			URL url = loader.getResource(pathToSoundsFile);
-			InputStream is;
-			try {
-				is = new FileInputStream(new File(url.toURI()));
-			}
-			catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return;
-			}
+			InputStream is = new FileInputStream(new File(url.toURI()));
 			sp = spf.newSAXParser();
 			SoundXMLHandler sxh = new SoundXMLHandler();
 			sp.parse(is, sxh);
@@ -335,6 +327,10 @@ public class SoundEngine {
 			e.printStackTrace();
 		}
 		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
