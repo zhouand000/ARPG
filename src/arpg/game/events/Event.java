@@ -5,8 +5,6 @@ package arpg.game.events;
 
 import java.util.ArrayList;
 
-import javax.xml.bind.annotation.*;
-
 import arpg.game.effects.Effect;
 import arpg.game.effects.EmptyEffect;
 import arpg.game.sound.Playlist;
@@ -15,54 +13,54 @@ import arpg.game.sound.Playlist;
  * @author Andrew
  * 
  */
-@XmlRootElement(name = "event")
+/**
+ * @author Andrew
+ * 
+ */
 public class Event {
 	
+	/**
+	 * 
+	 */
 	public static final ChoiceList CONTINUE_ON = new ChoiceList(ChoiceList.continueOn);
+	
 	//	static final ChoiceList DO_NOTHING = new ChoiceList(ChoiceList.doNothing);
 	//	static final ChoiceList WAIT = new ChoiceList(ChoiceList.wait);
 	
 	/**
 	 * Event ID (Unique identifier, Required)
 	 */
-	@XmlID
 	public final String ID;
 	
 	/**
 	 * Event Name
 	 */
-	@XmlElement
 	public final String name;
 	
 	/**
 	 * Event text (Required)
 	 */
-	@XmlElement
 	public final String text;
 	
 	/**
 	 * A list of the choices available at the event
 	 * 
 	 */
-	@XmlElementWrapper
 	public ChoiceList choices;
 	
 	/**
 	 * The effect of the event
 	 */
-	@XmlElement
 	public Effect effect;
 	
 	/**
 	 * Is true if the effect should be hidden
 	 */
-	@XmlElement
 	public boolean isHidden;
 	
 	/**
 	 * 
 	 */
-	@XmlElement
 	public final Playlist playlist;
 	
 	/**
@@ -185,6 +183,31 @@ public class Event {
 		}
 		
 		playlist = new Playlist(name);
+		
+	}
+	
+	/**
+	 * @param ID
+	 * @param name
+	 * @param text
+	 * @param choices
+	 * @param effect
+	 * @param isHidden
+	 * @param playlist
+	 * 
+	 */
+	public Event (String ID, String name, String text, ChoiceList choices,
+			Effect effect, boolean isHidden, Playlist playlist) {
+		
+		// TODO Auto-generated constructor stub
+		
+		this.ID = ID;
+		this.name = name;
+		this.text = text;
+		this.choices = choices;
+		this.effect = effect;
+		this.isHidden = isHidden;
+		this.playlist = playlist;
 		
 	}
 	

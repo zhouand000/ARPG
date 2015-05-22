@@ -10,7 +10,10 @@ import java.util.Scanner;
 /**
  * @author Andrew
  * 
+ * Unfinished parser
  */
+@Deprecated
+@SuppressWarnings("all")
 public class EventParser {
 	
 	File file;
