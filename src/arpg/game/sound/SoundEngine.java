@@ -174,7 +174,7 @@ public class SoundEngine {
 				},
 				"SoundThread"
 				);
-		
+		thread.setDaemon(true);
 		thread.run();
 		
 	}
@@ -338,7 +338,7 @@ public class SoundEngine {
 	}
 	
 	/**
-	 * Initialises the sound mappings
+	 * Initialises the sound mappings using hardcoded mappings
 	 */
 	@Deprecated
 	void initSoundMap () {
