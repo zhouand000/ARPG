@@ -35,8 +35,11 @@ public class EventFactory {
 	
 	ClassLoader loader = this.getClass().getClassLoader();
 	
-	public static String pathToEventsFile = "arpg/assets/events/Events.xml";
-	public HashMap<String, EventGroup> eventGroupMap;
+	/**
+	 * The path to the default events file
+	 */
+	public static String pathToDefaultEventsFile = "arpg/assets/events/Events.xml";
+	
 	
 	/**
 	 * 
@@ -64,7 +67,7 @@ public class EventFactory {
 		SAXParser sp;
 		
 		try {
-			URL url = loader.getResource(pathToEventsFile);
+			URL url = loader.getResource(pathToDefaultEventsFile);
 			InputStream is = new FileInputStream(new File(url.toURI()));
 			sp = spf.newSAXParser();
 			EventXMLHandler exh = new EventXMLHandler();
@@ -92,40 +95,6 @@ public class EventFactory {
 			e.printStackTrace();
 		}
 	
-	void init () {
-		
-		SAXParserFactory spf = SAXParserFactory.newInstance();
-		SAXParser sp;
-		
-		try {
-			URL url = loader.getResource(pathToEventsFile);
-			InputStream is = new FileInputStream(new File(url.toURI()));
-			sp = spf.newSAXParser();
-			EventXMLHandler exh = new EventXMLHandler();
-			sp.parse(is, exh);
-			System.out.println("Done parsing");
-		}
-		catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 	}
 	
 	/**
@@ -144,7 +113,10 @@ public class EventFactory {
 		 */
 		public Stack<Object> objectStack;
 		
-		public EventGroupPrototype prototype;
+		/**
+		 * 
+		 */
+		public EventGroupPrototype eventGroupPrototype;
 		
 		/**
 		 * 
