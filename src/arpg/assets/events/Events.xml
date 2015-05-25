@@ -100,10 +100,10 @@
 			waterfall.
 		</text>
 	</textlist>
-	<eventlist ID="EventList:Waterfall.TalkWithParty" name="Waterfall Event List">
+	<eventgroup ID="EventGroup:Waterfall.TalkWithParty" name="Waterfall Event List">
 		<event name="Waterfall with cave">
 		</event>
-	</eventlist>
+	</eventgroup>
 	<event ID="Event:Waterfall" name="Waterfall">
 		<text load="TextList:Waterfall" />
 		<choice>
@@ -116,7 +116,7 @@
 					<text>
 						Investigate behind the waterfall.
 					</text>
-					<event load="EventList:Waterfall.Investigate" />
+					<event load="EventGroup:Waterfall.Investigate" />
 				</choice>
 			</event>
 		</choice>
@@ -126,7 +126,7 @@
 			</text>
 		</choice>
 	</event>
-	<eventlist ID="EventList:Waterfall.Investigate">
+	<eventgroup ID="EventGroup:Waterfall.Investigate">
 		<event>
 			<text>
 				Underneath the waterfall, you see what appears to be a narrow ledge
@@ -136,7 +136,7 @@
 				<text>
 					Try to jump through the waterfall.
 				</text>
-				<event load="EventList:Waterfall.Jump" />
+				<event load="EventGroup:Waterfall.Jump" />
 			</choice>
 			<choice>
 				<text>
@@ -145,8 +145,8 @@
 				<game action="EndEvent" />
 			</choice>
 		</event>
-	</eventlist>
-	<eventlist ID="EventList:Waterfall.Jump">
+	</eventgroup>
+	<eventgroup ID="EventGroup:Waterfall.Jump">
 		<event>
 			<!-- TODO Modify this event so that the enemy attack -->
 			<text>
@@ -175,5 +175,5 @@
 			</choice>
 			<game action="EndEvent" />
 		</event>
-	</eventlist>
+	</eventgroup>
 </eventfile>
