@@ -7,7 +7,7 @@
 		</text>
 		<choice>
 			<text>Start.</text>
-			<event />
+			<game action="EndEvent" />
 		</choice>
 	</event>
 	<event ID="Evnent:MysteriousTemple" name="Mysterious Temple" standalone="true"
@@ -32,7 +32,7 @@
 		</choice>
 		<choice>
 			<text>Leave.</text>
-			<event />
+			<game action="EndEvent" />
 		</choice>
 	</event>
 	<event ID="Event:MysteriousTemple.Inside" name="Inside the Mysterious Temple"
@@ -50,7 +50,7 @@
 				large boulder rolls from the inside of the temple and blocks the entrance.
 				<choice>
 					<text>Leave.</text>
-					<event />
+					<game action="EndEvent" />
 				</choice>
 			</event>
 		</choice>
@@ -68,7 +68,7 @@
 				<effect name="Broken Leg" type="Status">
 					<modifier stat="speed" type="multiplicative" amount="50%" />
 				</effect>
-				<event />
+				<game action="EndEvent" />
 			</event>
 		</choice>
 	</event>
@@ -121,7 +121,8 @@
 			</event>
 		</choice>
 		<choice>
-			<text> Leave.
+			<text>
+				Leave.
 			</text>
 		</choice>
 	</event>
@@ -129,8 +130,7 @@
 		<event>
 			<text>
 				Underneath the waterfall, you see what appears to be a narrow ledge
-				about 12 metres
-				above you. You head back to the cliff.
+				about 12 metres above you. You head back to the cliff.
 			</text>
 			<choice>
 				<text>
@@ -142,7 +142,7 @@
 				<text>
 					Leave.
 				</text>
-				<event />
+				<game action="EndEvent" />
 			</choice>
 		</event>
 	</eventlist>
@@ -157,7 +157,7 @@
 				<text>Continue.</text>
 			</choice>
 			<game action="GameOver" />
-			<event />
+			<game action="EndEvent" />
 		</event>
 		<event>
 			<text>
@@ -169,13 +169,11 @@
 				the minecart system to take you farther towards your destination.
 			</text>
 			<choice>
-			<text>
-				Continue
-			</text></choice>
-			<event />
-		</event>
-		<event>
-			<text></text>
+				<text>
+					Continue.
+				</text>
+			</choice>
+			<game action="EndEvent" />
 		</event>
 	</eventlist>
 </eventfile>
