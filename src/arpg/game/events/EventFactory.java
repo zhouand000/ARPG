@@ -15,6 +15,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import arpg.game.effects.Effect;
+import arpg.game.events.EventFactory.EventXMLHandler.EventGroupPrototype;
+import arpg.game.events.EventFactory.EventXMLHandler.EventPrototype;
 import arpg.game.sound.Playlist;
 
 /**
@@ -40,7 +42,6 @@ public class EventFactory {
 	 */
 	public static String pathToDefaultEventsFile = "arpg/assets/events/Events.xml";
 	
-	
 	/**
 	 * 
 	 */
@@ -57,7 +58,6 @@ public class EventFactory {
 	 * @param args
 	 */
 	public static void main (String[] args) {
-		
 		
 	}
 	
@@ -94,7 +94,7 @@ public class EventFactory {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
+		
 	}
 	
 	/**
@@ -170,271 +170,302 @@ public class EventFactory {
 			}
 			
 		}
+		
+		/* (non-Javadoc)
+		 * @see org.xml.sax.helpers.DefaultHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
+		 */
+		@Override
+		public void endElement (String uri, String localName, String qName)
+				throws SAXException {
+			// TODO Auto-generated method stub
+			super.endElement(uri, localName, qName);
+		}
+		
+		/**
+		 * @author Andrew
+		 * 
+		 */
+		public class EventGroupPrototype {
+			
+			/**
+			 * ID of the Event
+			 */
+			public String ID;
+			
+			/**
+			 * Name of the Event
+			 */
+			public String name;
+			
+			ArrayList<EventPrototype> eventList;
+			
+			Random rng = new Random(0L);
+			
+			/**
+			 * 
+			 */
+			public EventGroupPrototype () {
+				
+				eventList = new ArrayList<EventPrototype>();
+			}
+			
+			/**
+			 * @param arguments
+			 * 
+			 */
+			public EventGroupPrototype (EventPrototype... arguments) {
+				
+				eventList = new ArrayList<EventPrototype>(Arrays.asList(arguments));
+				
+			}
+			
+			/**
+			 * @param arguments
+			 * 
+			 */
+			public void add (EventPrototype... arguments) {
+				
+				for (EventPrototype e : arguments) {
+					
+					eventList.add(e);
+					
+				}
+				
+			}
+			
+			/**
+			 * @return
+			 */
+			public EventGroup toEventGroup () {
+				
+				ArrayList<Event> output = new ArrayList<Event>();
+				for (EventPrototype ep : eventList) {
+					
+					output.add(ep.toEvent());
+				}
+				return new EventGroup(ID, name, output);
+				
+			}
+			
+		}
+		
+		/**
+		 * @author Andrew Event prototype object
+		 */
+		public class EventPrototype {
+			
+			/**
+			 * Event ID (Unique identifier, Required)
+			 */
+			public String ID;
+			
+			/**
+			 * Event Name
+			 */
+			public String name;
+			
+			/**
+			 * Event text (Required)
+			 */
+			public String text;
+			
+			/**
+			 * A list of the choices available at the event
+			 * 
+			 */
+			public ChoiceListPrototype choices;
+			
+			/**
+			 * The effect of the event
+			 */
+			public Effect effect;
+			
+			/**
+			 * Is true if the effect should be hidden
+			 */
+			public boolean isHidden;
+			
+			/**
+			 * 
+			 */
+			public Playlist playlist;
+			
+			/**
+			 * @return an event with the same values as the prototype
+			 */
+			public Event toEvent () {
+				
+				return new Event(ID, name, text, choices.toChoiceList(), effect, isHidden, playlist);
+				
+			}
+			
+		}
+		
+		/**
+		 * @author Andrew
+		 * 
+		 */
+		public class ChoiceListPrototype {
+			
+			// TODO Finish deciding on this
+			
+			// static final Choice doNothing = new Choice("Do nothing. ");
+			
+			// static final Choice wait = new Choice("Wait. ");
+			
+			ArrayList<ChoicePrototype> choices;
+			
+			/**
+			 * 
+			 */
+			public ChoiceListPrototype () {
+				
+				// TODO Auto-generated constructor stub
+				
+				choices = new ArrayList<ChoicePrototype>();
+				// choices.add(new Choice("Continue. "));
+				
+			}
+			
+			/**
+			 * 
+			 * @param choices
+			 */
+			public ChoiceListPrototype (ArrayList<ChoicePrototype> choices) {
+				
+				this.choices = choices;
+				
+			}
+			
+			/**
+			 * @param arguments
+			 */
+			public ChoiceListPrototype (ChoicePrototype... arguments) {
+				
+				choices = new ArrayList<ChoicePrototype>(Arrays.asList(arguments));
+				
+			}
+			
+			/**
+			 * @param c
+			 */
+			public void add (ChoicePrototype c) {
+				
+				choices.add(c);
+				
+			}
+			
+			/**
+			 * @return a list with the choice strings
+			 */
+			public ArrayList<String> getChoiceText () {
+				
+				ArrayList<String> text = new ArrayList<String>(choices.size());
+				for (ChoicePrototype c : choices) {
+					
+					text.add(c.text);
+					
+				}
+				
+				return text;
+				
+			}
+			
+			/**
+			 * @return
+			 */
+			public ChoiceList toChoiceList () {
+				
+				ArrayList<Choice> choiceArrayList = new ArrayList<Choice>();
+				for (ChoicePrototype cp : choices) {
+					
+					choiceArrayList.add(cp.toChoice());
+					
+				}
+				return new ChoiceList(choiceArrayList);
+				
+			}
+			
+		}
+		
+		/**
+		 * @author Andrew
+		 * 
+		 */
+		public class ChoicePrototype {
+			
+			/**
+			 * The text of the choice
+			 */
+			public final String text;
+			
+			/**
+			 * A list of possible events
+			 * 
+			 */
+			public final EventGroupPrototype nextEvent;
+			
+			/**
+			 * 
+			 */
+			public ChoicePrototype () {
+				// TODO Auto-generated constructor stub
+				
+				text = "Continue.";
+				nextEvent = null;
+				
+			}
+			
+			/**
+			 * @param text
+			 * @param arguments
+			 */
+			public ChoicePrototype (String text, EventPrototype... arguments) {
+				
+				this.text = text;
+				nextEvent = new EventGroupPrototype(arguments);
+			}
+			
+			/**
+			 * @param text
+			 * @param nextEvent
+			 */
+			public ChoicePrototype (String text, EventGroupPrototype nextEvent) {
+				
+				this.text = text;
+				this.nextEvent = nextEvent;
+				
+			}
+			
+			/**
+			 * @return
+			 */
+			public Choice toChoice () {
+				
+				return new Choice(text, nextEvent.toEventGroup());
+				
+			}
+			
+		}
+		
 	}
 	
 	/**
 	 * @author Andrew
 	 * 
 	 */
-	public class EventGroupPrototype {
+	@SuppressWarnings("javadoc")
+	public enum ElementType {
 		
-		/**
-		 * ID of the Event
-		 */
-		public String ID;
-		
-		/**
-		 * Name of the Event
-		 */
-		public String name;
-		
-		ArrayList<EventPrototype> eventList;
-		
-		Random rng = new Random(0L);
-		
-		/**
-		 * 
-		 */
-		public EventGroupPrototype () {
-			
-			eventList = new ArrayList<EventPrototype>();
-		}
-		
-		/**
-		 * @param arguments
-		 * 
-		 */
-		public EventGroupPrototype (EventPrototype... arguments) {
-			
-			eventList = new ArrayList<EventPrototype>(Arrays.asList(arguments));
-			
-		}
-		
-		/**
-		 * @param arguments
-		 * 
-		 */
-		public void add (EventPrototype... arguments) {
-			
-			for (EventPrototype e : arguments) {
-				
-				eventList.add(e);
-				
-			}
-			
-		}
-		
-		/**
-		 * @return
-		 */
-		public EventGroup toEventGroup () {
-			
-			ArrayList<Event> output = new ArrayList<Event>();
-			for (EventPrototype ep : eventList) {
-				
-				output.add(ep.toEvent());
-			}
-			return new EventGroup(ID, name, output);
-			
-		}
-		
-	}
-	
-	/**
-	 * @author Andrew Event prototype object
-	 */
-	public class EventPrototype {
-		
-		/**
-		 * Event ID (Unique identifier, Required)
-		 */
-		public String ID;
-		
-		/**
-		 * Event Name
-		 */
-		public String name;
-		
-		/**
-		 * Event text (Required)
-		 */
-		public String text;
-		
-		/**
-		 * A list of the choices available at the event
-		 * 
-		 */
-		public ChoiceListPrototype choices;
-		
-		/**
-		 * The effect of the event
-		 */
-		public Effect effect;
-		
-		/**
-		 * Is true if the effect should be hidden
-		 */
-		public boolean isHidden;
-		
-		/**
-		 * 
-		 */
-		public Playlist playlist;
-		
-		/**
-		 * @return an event with the same values as the prototype
-		 */
-		public Event toEvent () {
-			
-			return new Event(ID, name, text, choices.toChoiceList(), effect, isHidden, playlist);
-			
-		}
-		
-	}
-	
-	/**
-	 * @author Andrew
-	 * 
-	 */
-	public class ChoiceListPrototype {
-		
-		// TODO Finish deciding on this
-		
-		// static final Choice doNothing = new Choice("Do nothing. ");
-		
-		// static final Choice wait = new Choice("Wait. ");
-		
-		ArrayList<ChoicePrototype> choices;
-		
-		/**
-		 * 
-		 */
-		public ChoiceListPrototype () {
-			
-			// TODO Auto-generated constructor stub
-			
-			choices = new ArrayList<ChoicePrototype>();
-			// choices.add(new Choice("Continue. "));
-			
-		}
-		
-		/**
-		 * 
-		 * @param choices
-		 */
-		public ChoiceListPrototype (ArrayList<ChoicePrototype> choices) {
-			
-			this.choices = choices;
-			
-		}
-		
-		/**
-		 * @param arguments
-		 */
-		public ChoiceListPrototype (ChoicePrototype... arguments) {
-			
-			choices = new ArrayList<ChoicePrototype>(Arrays.asList(arguments));
-			
-		}
-		
-		/**
-		 * @param c
-		 */
-		public void add (ChoicePrototype c) {
-			
-			choices.add(c);
-			
-		}
-		
-		/**
-		 * @return a list with the choice strings
-		 */
-		public ArrayList<String> getChoiceText () {
-			
-			ArrayList<String> text = new ArrayList<String>(choices.size());
-			for (ChoicePrototype c : choices) {
-				
-				text.add(c.text);
-				
-			}
-			
-			return text;
-			
-		}
-		
-		/**
-		 * @return
-		 */
-		public ChoiceList toChoiceList () {
-			
-			ArrayList<Choice> choiceArrayList = new ArrayList<Choice>();
-			for (ChoicePrototype cp : choices) {
-				
-				choiceArrayList.add(cp.toChoice());
-				
-			}
-			return new ChoiceList(choiceArrayList);
-			
-		}
-
-	}
-	
-	/**
-	 * @author Andrew
-	 * 
-	 */
-	public class ChoicePrototype {
-		
-		/**
-		 * The text of the choice
-		 */
-		public final String text;
-		
-		/**
-		 * A list of possible events
-		 * 
-		 */
-		public final EventGroupPrototype nextEvent;
-		
-		/**
-		 * 
-		 */
-		public ChoicePrototype () {
-			// TODO Auto-generated constructor stub
-			
-			text = "Continue.";
-			nextEvent = null;
-			
-		}
-		
-		/**
-		 * @param text
-		 * @param arguments
-		 */
-		public ChoicePrototype (String text, EventPrototype... arguments) {
-			
-			this.text = text;
-			nextEvent = new EventGroupPrototype(arguments);
-}
-		/**
-		 * @param text
-		 * @param nextEvent
-		 */
-		public ChoicePrototype (String text, EventGroupPrototype nextEvent) {
-			
-			this.text = text;
-			this.nextEvent = nextEvent;
-			
-		}
-		
-		/**
-		 * @return
-		 */
-		public Choice toChoice () {
-			
-			return new Choice(text, nextEvent.toEventGroup());
-			
-		}
+		EventFile,
+		EventList,
+		Event,
+		Location,
+		Biome,
+		Place,
+		Choice,
+		TextList,
+		Text,
 		
 	}
 	

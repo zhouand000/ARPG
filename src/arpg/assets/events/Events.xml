@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <eventfile xmlns="http://www.w3schools.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="file:./EventFile.xsd">
-
+	xsi:schemaLocation="./EventFile">
 	<event ID="Start" name="Start" standalone="true">
-		<location biome="$(ANY)" location="Empty" region="$(ANY)" />
-		<text>
-			Tip: Pay attention to your choices, and each event's text. There
-			may be useful information.
+		<text> Tip: Pay attention to your choices, and each event's text. There may be
+			useful information.
 		</text>
 		<choice>
 			<text>Start.</text>
+			<event />
 		</choice>
 	</event>
-
-	<event ID="MysteriousTemple" name="Mysterious Temple" standalone="true">
+	<event ID="Evnent:MysteriousTemple" name="Mysterious Temple" standalone="true"
+		unique="false">
 		<location name="Mysterious Temple">
 			<biome>Forest</biome>
 			<biome>Jungle</biome>
@@ -23,48 +20,162 @@
 			<place>Mysterious Temple Exterior</place>
 			<region any="true" />
 		</location>
-		<sound load="$(List.DARK)" />
-		<location load="$(this.location)" replace="true" />
-		<sound load="$(this.soundlist)" replace="true" />
-		<text>You arrive at a mysterious temple.</text>
+		<sound load="SoundList:Dark" />
+		<text>
+			You arrive at a mysterious temple. The temple entrance, once sealed
+			behind almost
+			a metre of rock, is partially open.
+		</text>
 		<choice>
 			<text>Enter.</text>
-			<eventref ID="InsideMysteriousTemple" name="Mysterious Temple" />
+			<event load="Event:MysteriousTemple.Inside" />
 		</choice>
 		<choice>
 			<text>Leave.</text>
+			<event />
 		</choice>
 	</event>
-
-	<event ID="InsideMysteriousTemple" name="Inside the Mysterious Temple"
+	<event ID="Event:MysteriousTemple.Inside" name="Inside the Mysterious Temple"
 		standalone="false">
 		<location>
 			<place>Mysterious Temple Interior</place>
 		</location>
-
 		<location load="$(this.location)" replace="false" />
 		<sound replace="false" />
 		<text>There are two doors, plus the exit.</text>
 		<choice>
-			Take the left door.
+			<text>Take the left door</text>
 			<event>
-				A teleport trap activates, and returns you to the outside of the
-				temple. The temple door seals behind you.
+				A teleport trap activates, and returns you to the outside of the temple. A
+				large boulder rolls from the inside of the temple and blocks the entrance.
 				<choice>
-					<text>Continue.</text>
+					<text>Leave.</text>
+					<event />
 				</choice>
 			</event>
 		</choice>
 		<choice>
-			<text>The door leads to a pit.</text>
-			<effect type="OneTime">
-				<modifier stat="Health" type="multiplicative" amount="50%" />
-			</effect>
-			<effect name="Broken Leg" type="Status">
-				<modifier stat="speed" type="multiplicative" amount="50%" />
-			</effect>
+			<text>
+				Take the right door.
+			</text>
+			<event>
+				<text>
+					A pit trap activates. You fall and get rescued by your party members.
+				</text>
+				<effect type="OneTime">
+					<modifier stat="Health" type="multiplicative" amount="50%" />
+				</effect>
+				<effect name="Broken Leg" type="Status">
+					<modifier stat="speed" type="multiplicative" amount="50%" />
+				</effect>
+				<event />
+			</event>
 		</choice>
-
 	</event>
+	<textlist ID="TextList:Waterfall" name="Waterfall Text">
+		<text>
+			You arrive at a beautiful waterfall. A small cliff faces the waterfall.
+		</text>
+		<text>
+			You climb up to the top of a small cliff. You see a large waterfall
+			facing you.
+		</text>
+	</textlist>
+	<textlist ID="TextList:Waterfall.TalkWithParty">
+		<text>
+			One of your party members tells you that according to local lore, the
+			legendary hero Etho shaped the mountain and the waterfall with his own hands.
+			You recall that Etho had a cave filled with treasures and other useful
+			resources.
+		</text>
+		<text>
 
+			One of your party members is talking with a local. You overhear the
+			local talking of a local legend of treasure hidden behind a waterfall.
+		</text>
+		<text>
+			One of your party members is in an argument with a local. You overhear
+			the local retort, "Because there's always treasure hidden behind every single
+			waterfall!" Your party requests an opportunity to investigate behind the
+			waterfall.
+		</text>
+	</textlist>
+	<eventlist ID="EventList:Waterfall.TalkWithParty" name="Waterfall Event List">
+		<event name="Waterfall with cave">
+		</event>
+	</eventlist>
+	<event ID="Event:Waterfall" name="Waterfall">
+		<text load="TextList:Waterfall" />
+		<choice>
+			<text>
+				Talk with your party.
+			</text>
+			<event>
+				<text load="TextList:Waterfall.TalkWithParty" />
+				<choice>
+					<text>
+						Investigate behind the waterfall.
+					</text>
+					<event load="EventList:Waterfall.Investigate" />
+				</choice>
+			</event>
+		</choice>
+		<choice>
+			<text> Leave.
+			</text>
+		</choice>
+	</event>
+	<eventlist ID="EventList:Waterfall.Investigate">
+		<event>
+			<text>
+				Underneath the waterfall, you see what appears to be a narrow ledge
+				about 12 metres
+				above you. You head back to the cliff.
+			</text>
+			<choice>
+				<text>
+					Try to jump through the waterfall.
+				</text>
+				<event load="EventList:Waterfall.Jump" />
+			</choice>
+			<choice>
+				<text>
+					Leave.
+				</text>
+				<event />
+			</choice>
+		</event>
+	</eventlist>
+	<eventlist ID="EventList:Waterfall.Jump">
+		<event>
+			<!-- TODO Modify this event so that the enemy attack -->
+			<text>
+				It was a trap! Bandits attack you once you jump through the waterfall
+				and land in a cave.
+			</text>
+			<choice>
+				<text>Continue.</text>
+			</choice>
+			<game action="GameOver" />
+			<event />
+		</event>
+		<event>
+			<text>
+				On jumping through the waterfall, you land in a large cave. While the
+				place may have looked beautiful at one point, it is overgrown with vines and
+				moss. However, you find a extensive tunnel system, and the entrance to a
+				minecart system. You also find the remains of a small medical centre. You
+				use the medical supplies at the medical station to heal some wounds, and use
+				the minecart system to take you farther towards your destination.
+			</text>
+			<choice>
+			<text>
+				Continue
+			</text></choice>
+			<event />
+		</event>
+		<event>
+			<text></text>
+		</event>
+	</eventlist>
 </eventfile>
