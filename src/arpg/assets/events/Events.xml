@@ -10,7 +10,7 @@
 			<game action="EndEvent" />
 		</choice>
 	</event>
-	<event ID="Evnent:MysteriousTemple" name="Mysterious Temple" standalone="true"
+	<event ID="Event:MysteriousTemple" name="Mysterious Temple" standalone="true"
 		unique="false">
 		<location name="Mysterious Temple">
 			<biome>Forest</biome>
