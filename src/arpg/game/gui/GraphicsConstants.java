@@ -33,4 +33,5 @@ public interface GraphicsConstants {
 	 * 
 	 */
 	public static final Color DEFAULT_BACKGROUND_COLOR = Color.LIGHT_GRAY;
+	
 }

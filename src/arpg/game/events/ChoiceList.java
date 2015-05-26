@@ -72,11 +72,30 @@ public class ChoiceList {
 		ArrayList<String> text = new ArrayList<String>(choices.size());
 		for (Choice c : choices) {
 			
-			text.add(c.text);
+			text.add(c.text.getText());
 			
 		}
 		
 		return text;
 		
 	}
+	
+	/**
+	 * @param i
+	 * @return
+	 */
+	public Choice getChoice (int i) {
+		
+		return choices.get(i);
+		
+	}
+	
+	/**
+	 * @return the size
+	 */
+	public int size() {
+		
+		return choices.size();
+	}
+	
 }

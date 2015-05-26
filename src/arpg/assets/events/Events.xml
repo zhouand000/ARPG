@@ -23,8 +23,7 @@
 		<sound load="SoundList:Dark" />
 		<text>
 			You arrive at a mysterious temple. The temple entrance, once sealed
-			behind almost
-			a metre of rock, is partially open.
+			behind almost a metre of rock, is partially open.
 		</text>
 		<choice>
 			<text>Enter.</text>
@@ -45,7 +44,7 @@
 		<text>There are two doors, plus the exit.</text>
 		<choice>
 			<text>Take the left door</text>
-			<event>
+			<event ID="Event:MysteriousTemple.TeleportTrap">
 				A teleport trap activates, and returns you to the outside of the temple. A
 				large boulder rolls from the inside of the temple and blocks the entrance.
 				<choice>
@@ -58,7 +57,7 @@
 			<text>
 				Take the right door.
 			</text>
-			<event>
+			<event ID="Event:MysteriousTemple.PitTrap">
 				<text>
 					A pit trap activates. You fall and get rescued by your party members.
 				</text>
@@ -100,17 +99,13 @@
 			waterfall.
 		</text>
 	</textlist>
-	<eventgroup ID="EventGroup:Waterfall.TalkWithParty" name="Waterfall Event List">
-		<event name="Waterfall with cave">
-		</event>
-	</eventgroup>
 	<event ID="Event:Waterfall" name="Waterfall">
 		<text load="TextList:Waterfall" />
 		<choice>
 			<text>
 				Talk with your party.
 			</text>
-			<event>
+			<event ID="Event:Waterfall.TalkWithParty" name="">
 				<text load="TextList:Waterfall.TalkWithParty" />
 				<choice>
 					<text>
@@ -127,7 +122,7 @@
 		</choice>
 	</event>
 	<eventgroup ID="EventGroup:Waterfall.Investigate">
-		<event>
+		<event ID="Event:Waterfall.Investigate">
 			<text>
 				Underneath the waterfall, you see what appears to be a narrow ledge
 				about 12 metres above you. You head back to the cliff.
@@ -147,7 +142,7 @@
 		</event>
 	</eventgroup>
 	<eventgroup ID="EventGroup:Waterfall.Jump">
-		<event>
+		<event ID="Event:Waterfall.BanditCave">
 			<!-- TODO Modify this event so that the enemy attack -->
 			<text>
 				It was a trap! Bandits attack you once you jump through the waterfall
@@ -159,7 +154,7 @@
 			<game action="GameOver" />
 			<game action="EndEvent" />
 		</event>
-		<event>
+		<event ID="Event:Waterfall.FoundResourceCave">
 			<text>
 				On jumping through the waterfall, you land in a large cave. While the
 				place may have looked beautiful at one point, it is overgrown with vines and

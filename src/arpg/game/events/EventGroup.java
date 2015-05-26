@@ -9,7 +9,7 @@ import java.util.*;
  * @author Andrew
  * 
  */
-public class EventGroup {
+public class EventGroup implements EventContainer {
 	
 	/**
 	 * The group's ID
@@ -46,8 +46,6 @@ public class EventGroup {
 		
 	}
 	
-
-	
 	/**
 	 * @param ID
 	 * @param name
@@ -75,7 +73,8 @@ public class EventGroup {
 	/**
 	 * @return a random Event
 	 */
-	public Event getRandomEvent () {
+	@Override
+	public Event getEvent () {
 		
 		return eventList.get(rng.nextInt(eventList.size()));
 		

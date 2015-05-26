@@ -5,9 +5,15 @@ package arpg.game.gui;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URISyntaxException;
 
 import javax.swing.*;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.EmptyBorder;
+
+import arpg.game.gui.ImagePanel.Mode;
 
 /**
  * @author Andrew
@@ -21,12 +27,19 @@ public class GameWindow extends JFrame implements GraphicsConstants {
 	private static final long serialVersionUID = 1L;
 	
 	/**
+	 * Default location for the brick background
+	 */
+	public static final String BRICK_BACKGROUND_LOCATION = "arpg/assets/images/BrickBackground.png";
+	
+	ClassLoader loader = getClass().getClassLoader();
+	
+	/**
 	 * The contentPane
 	 */
 	public Container contentPane;
 	
 	/**
-	 * The outer panel.
+	 * The outer panel. Acts as background
 	 */
 	public JPanel outerPanel;
 	
@@ -63,12 +76,17 @@ public class GameWindow extends JFrame implements GraphicsConstants {
 	/**
 	 * Used to display the event log. This text area is not editable
 	 */
-	public JTextArea textArea;
+	public JTextArea logArea;
 	
 	/**
 	 * Status field. This text area is not editable
 	 */
 	public JTextField statusField;
+	
+	/**
+	 * The panel that contains the status field
+	 */
+	public JPanel statusPanel;
 	
 	/**
 	 * Player can enter text here. The text will be processed upon detection of
@@ -94,24 +112,35 @@ public class GameWindow extends JFrame implements GraphicsConstants {
 	/**
 	 * The background color of the inner frame
 	 */
-	public Color backgroundColor;
+	public Color backgroundColor = Color.LIGHT_GRAY;
+	
+	/**
+	 * The inputStream associated with the JTextField inputField
+	 */
+	public InputStream inputStream;
+	
+	/**
+	 * The outputStream associated with the JTextArea logArea
+	 */
+	public OutputStream outputStream;
 	
 	/**
 	 * 
 	 */
 	public GameWindow () {
 		
-		// TODO Auto-generated constructor stub
+		configLookAndFeel();
 		
 		contentPane = getContentPane();
-		outerPanel = new ImagePanel();
-		innerPanel = new JPanel();
-		textPanel = new JPanel();
+		outerPanel = new ImagePanel(new BorderLayout());
+		innerPanel = new JPanel(new BorderLayout());
+		textPanel = new JPanel(new BorderLayout());
 		inputContainer = new Container();
+		statusPanel = new JPanel(new BorderLayout());
 		
 		scrollPane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
-		textArea = new JTextArea(10, 40);
+		logArea = new JTextArea(10, 40);
 		statusField = new JTextField(40);
 		inputField = new JTextField(40);
 		
@@ -134,7 +163,25 @@ public class GameWindow extends JFrame implements GraphicsConstants {
 			}
 		});
 		
-		configGUI();
+		try {
+			SwingUtilities.invokeAndWait(new Runnable() {
+				
+				@Override
+				public void run () {
+					
+					configGUI();
+					inputStream = new TextComponentInputStream(inputField);
+					outputStream = new TextAreaOutputStream(logArea);
+					
+				}
+			});
+		}
+		catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -143,6 +190,49 @@ public class GameWindow extends JFrame implements GraphicsConstants {
 		
 		GameWindow gw = new GameWindow();
 		gw.setVisible(true);
+		gw.setStatus("Test");
+		
+	}
+	
+	/**
+	 * @param s
+	 */
+	public void setStatus (String s) {
+		
+		statusField.setText(s);
+		
+	}
+	
+	/**
+	 * 
+	 */
+	private void configLookAndFeel () {
+		
+		try {
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equalsIgnoreCase(info.getName())) {
+					try {
+						UIManager.setLookAndFeel(info.getClassName());
+						break;
+					}
+					catch (ClassNotFoundException e) {
+					}
+					catch (InstantiationException e) {
+					}
+				}
+			}
+		}
+		catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		catch (UnsupportedLookAndFeelException e) {
+			try {
+				UIManager.setLookAndFeel("Metal");
+			}
+			catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
 		
 	}
 	
@@ -156,33 +246,37 @@ public class GameWindow extends JFrame implements GraphicsConstants {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBackground(Color.LIGHT_GRAY);
 		
-		textPanel.setLayout(new BorderLayout());
 		inputContainer.setLayout(new BoxLayout(inputContainer, BoxLayout.Y_AXIS));
 		
 		configTextComponents();
 		
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setViewportView(textArea);
-		scrollPane.setMinimumSize(textArea.getMinimumSize());
+		scrollPane.setViewportView(logArea);
+		scrollPane.setMinimumSize(logArea.getMinimumSize());
 		
 		textPanel.add(scrollPane, BorderLayout.CENTER);
 		
-		inputContainer.add(statusField);
+		statusPanel.setBorder(new EmptyBorder(0, 5, 0, 5));
+		statusPanel.add(statusField);
+		
+		inputContainer.add(statusPanel);
 		inputContainer.add(inputField);
 		
 		textPanel.add(inputContainer, BorderLayout.SOUTH);
 		
-		innerPanel.setLayout(new BorderLayout());
 		innerPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		innerPanel.add(new JButton("Test Button"), BorderLayout.SOUTH);
 		innerPanel.add(textPanel, BorderLayout.CENTER);
 		
-		outerPanel.setLayout(new BorderLayout());
+		configBackgroundPanel();
+		
 		outerPanel.add(innerPanel, BorderLayout.CENTER);
 		
 		contentPane.add(outerPanel, BorderLayout.CENTER);
 		
+		gameMenu.add(quitMenuItem);
+		menuBar.add(gameMenu);
+		// menuBar.setPreferredSize(new Dimension(10, 20));
 		setJMenuBar(menuBar);
 		
 		pack();
@@ -191,17 +285,32 @@ public class GameWindow extends JFrame implements GraphicsConstants {
 	
 	private void configTextComponents () {
 		
-		textArea.setEditable(false);
-		textArea.setWrapStyleWord(true);
-		textArea.setFont(MONOSPACED_FONT);
-		textArea.setVisible(true);
+		logArea.setEditable(false);
+		logArea.setWrapStyleWord(true);
+		logArea.setFont(MONOSPACED_FONT);
+		logArea.setVisible(true);
 		
 		statusField.setEditable(false);
 		statusField.setFont(MONOSPACED_FONT);
-		statusField.setBackground(backgroundColor);
+		statusField.setBackground(new Color(UIManager.getColor("RootPane.background").getRGB()));
+		statusField.setBorder(null);
 		
 		inputField.setEditable(true);
 		inputField.setFont(MONOSPACED_FONT);
+		
+	}
+	
+	private void configBackgroundPanel () {
+		
+		ImagePanel ip = (ImagePanel) outerPanel;
+		try {
+			ip.setImage(new File(loader.getResource(BRICK_BACKGROUND_LOCATION).toURI()));
+			ip.setMode(Mode.TILED);
+		}
+		catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	

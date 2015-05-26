@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import arpg.game.effects.Effect;
 import arpg.game.effects.EmptyEffect;
-import arpg.game.sound.Playlist;
 
 /**
  * @author Andrew
@@ -40,7 +39,7 @@ public class Event {
 	/**
 	 * Event text (Required)
 	 */
-	public final String text;
+	public final TextContainer text;
 	
 	/**
 	 * A list of the choices available at the event
@@ -61,7 +60,7 @@ public class Event {
 	/**
 	 * 
 	 */
-	public final Playlist playlist;
+	public String playlistName;
 	
 	/**
 	 * @param effect
@@ -108,11 +107,10 @@ public class Event {
 		
 		ID = "";
 		this.name = name;
-		this.text = text;
+		this.text = new Text(text);
 		
 		choices = CONTINUE_ON;
 		this.effect = effect;
-		playlist = new Playlist(name);
 		
 	}
 	
@@ -129,7 +127,7 @@ public class Event {
 		
 		ID = "";
 		this.name = name;
-		this.text = text;
+		this.text = new Text(text);
 		
 		choices = new ChoiceList();
 		for (Choice c : arguments) {
@@ -137,8 +135,6 @@ public class Event {
 			choices.add(c);
 			
 		}
-		
-		playlist = new Playlist(name);
 		
 	}
 	
@@ -153,10 +149,65 @@ public class Event {
 		
 		this.ID = ID;
 		this.name = name;
-		this.text = text;
+		this.text = new Text(text);
 		
 		choices = new ChoiceList();
-		playlist = new Playlist(name);
+		
+	}
+	
+	/**
+	 * @param ID
+	 * @param name
+	 * @param text
+	 */
+	public Event (String ID, String name, TextContainer text) {
+		this.ID = ID;
+		this.name = name;
+		this.text = text;
+		choices = new ChoiceList();
+		
+	}
+	
+	/**
+	 * @param ID
+	 * @param name
+	 * @param text
+	 * @param playlistName
+	 * @param arguments
+	 */
+	public Event (String ID, String name, TextContainer text,
+			String playlistName, Choice... arguments) {
+		
+		this.ID = ID;
+		this.name = name;
+		this.text = text;
+		this.playlistName = playlistName;
+		
+		choices = new ChoiceList();
+		for (Choice c : arguments) {
+			
+			choices.add(c);
+			
+		}
+		
+	}
+	
+	/**
+	 * @param ID
+	 * @param name
+	 * @param text
+	 * @param playlistName
+	 * @param choices
+	 */
+	public Event (String ID, String name, TextContainer text,
+			String playlistName, ChoiceList choices) {
+		
+		this.ID = ID;
+		this.name = name;
+		this.text = text;
+		this.playlistName = playlistName;
+		
+		this.choices = choices;
 		
 	}
 	
@@ -173,7 +224,7 @@ public class Event {
 		
 		this.ID = ID;
 		this.name = name;
-		this.text = text;
+		this.text = new Text(text);
 		
 		choices = new ChoiceList();
 		for (Choice c : arguments) {
@@ -181,8 +232,6 @@ public class Event {
 			choices.add(c);
 			
 		}
-		
-		playlist = new Playlist(name);
 		
 	}
 	
@@ -193,24 +242,46 @@ public class Event {
 	 * @param choices
 	 * @param effect
 	 * @param isHidden
-	 * @param playlist
+	 * @param playlistName
 	 * 
 	 */
 	public Event (String ID, String name, String text, ChoiceList choices,
-			Effect effect, boolean isHidden, Playlist playlist) {
+			Effect effect, boolean isHidden, String playlistName) {
 		
 		// TODO Auto-generated constructor stub
 		
+		this.ID = ID;
+		this.name = name;
+		this.text = new Text(text);
+		this.choices = choices;
+		this.effect = effect;
+		this.isHidden = isHidden;
+		this.playlistName = playlistName;
+		
+	}
+	
+	/**
+	 * @param ID
+	 * @param name
+	 * @param text
+	 * @param choices
+	 * @param effect
+	 * @param isHidden
+	 * @param playlistName
+	 * 
+	 */
+	public Event (String ID, String name, TextContainer text,
+			ChoiceList choices, Effect effect, boolean isHidden,
+			String playlistName) {
 		this.ID = ID;
 		this.name = name;
 		this.text = text;
 		this.choices = choices;
 		this.effect = effect;
 		this.isHidden = isHidden;
-		this.playlist = playlist;
-		
+		this.playlistName = playlistName;
 	}
-	
+
 	/**
 	 * @return an ArrayList with the text of the Choices
 	 */
@@ -221,20 +292,17 @@ public class Event {
 	}
 	
 	/**
-	 * @param arguments
+	 * @param i
+	 * @return
 	 */
-	public void addToPlaylist (String... arguments) {
+	public Choice getChoice (int i) {
 		
-		for (String s : arguments) {
-			
-			playlist.add(s);
-			
-		}
+		return choices.getChoice(i);
 		
 	}
 	
 	/**
-	 * @return the iD
+	 * @return the ID
 	 */
 	public String getID () {
 		return ID;

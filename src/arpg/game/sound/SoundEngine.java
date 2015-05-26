@@ -72,7 +72,6 @@ public class SoundEngine {
 	 * 
 	 */
 	public SoundEngine () {
-		// TODO Auto-generated constructor stub
 		
 		soundMap = new HashMap<String, String>();
 		// initSoundMap();
@@ -95,10 +94,62 @@ public class SoundEngine {
 		System.out.println(engine.playlistMap);
 		
 		Playlist p = new Playlist("TestList");
+		
 		p.add("The Curtain Rises");
 		p.add("Discovery Hit");
 		
-		engine.playPlaylist(p);
+		// engine.playPlaylist(p);
+		
+	}
+	
+	/**
+	 * @param name
+	 */
+	public void playPlaylist (String name) {
+		
+		playPlaylist(name, false);
+		
+	}
+	
+	/**
+	 * @param name
+	 * @param shuffle
+	 */
+	public void playPlaylist (String name, boolean shuffle) {
+		
+		Playlist p = getPlaylist(name);
+		
+		if (p != null) {
+			if (shuffle) {
+				
+				Collections.shuffle(p);
+				
+			}
+			playPlaylist(p);
+		}
+		
+	}
+	
+	/**
+	 * @param name
+	 */
+	public void addPlaylistToQueue (String name) {
+		
+		addPlaylistToQueue(name, false);
+		
+	}
+	
+	/**
+	 * @param name
+	 * @param shuffle
+	 */
+	public void addPlaylistToQueue (String name, boolean shuffle) {
+		
+		Playlist p = getPlaylist(name);
+		
+		if (p != null) {
+			addToQueue(p);
+		}
 		
 	}
 	
@@ -299,6 +350,16 @@ public class SoundEngine {
 		
 		clip.stop();
 		clip.close();
+		
+	}
+	
+	/**
+	 * @param name
+	 * @return
+	 */
+	public Playlist getPlaylist (String name) {
+		
+		return playlistMap.get(name);
 		
 	}
 	

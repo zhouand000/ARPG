@@ -4,26 +4,21 @@
 	xsi:schemaLocation="file:./EventFile.xsd">
 	<sound ID="8bit Dungeon Boss" name="8bit Dungeon Boss"
 		src="arpg/assets/sounds/8bit Dungeon Boss.wav" />
-	<sound ID="Adventure Meme" name="Adventure Meme"
-		src="arpg/assets/sounds/Adventure Meme.wav" />
+	<sound ID="Adventure Meme" name="Adventure Meme" src="arpg/assets/sounds/Adventure Meme.wav" />
 	<sound ID="All This" name="All This" src="arpg/assets/sounds/All This.wav" />
-	<sound ID="Black Vortex" name="Black Vortex"
-		src="arpg/assets/sounds/Black Vortex.wav" />
+	<sound ID="Black Vortex" name="Black Vortex" src="arpg/assets/sounds/Black Vortex.wav" />
 	<sound ID="Call to Adventure" name="Call to Adventure"
 		src="arpg/assets/sounds/Call to Adventure.wav" />
 	<sound ID="Carefree" name="Carefree" src="arpg/assets/sounds/Carefree.wav" />
 	<sound ID="Cipher" name="Cipher" src="arpg/assets/sounds/Cipher2.wav" />
 	<sound ID="Cipher2" name="Cipher2" src="arpg/assets/sounds/Cipher2.wav" />
-	<sound ID="Discovery Hit" name="Discovery Hit"
-		src="arpg/assets/sounds/Discovery Hit.wav" />
+	<sound ID="Discovery Hit" name="Discovery Hit" src="arpg/assets/sounds/Discovery Hit.wav" />
 	<sound ID="Fanfare for Space" name="Fanfare for Space"
 		src="arpg/assets/sounds/Fanfare for Space.wav" />
 	<sound ID="Full On" name="Full On" src="arpg/assets/sounds/Full On.wav" />
 	<sound ID="Hitman" name="Hitman" src="arpg/assets/sounds/Hitman.wav" />
-	<sound ID="Life of Riley" name="Life of Riley"
-		src="arpg/assets/sounds/Life of Riley.wav" />
-	<sound ID="Take a Chance" name="Take a Chance"
-		src="arpg/assets/sounds/Take a Chance.wav" />
+	<sound ID="Life of Riley" name="Life of Riley" src="arpg/assets/sounds/Life of Riley.wav" />
+	<sound ID="Take a Chance" name="Take a Chance" src="arpg/assets/sounds/Take a Chance.wav" />
 	<sound ID="Tempting Secrets" name="Tempting Secrets"
 		src="arpg/assets/sounds/Tempting Secrets.wav" />
 	<sound ID="The Complex" name="The Complex" src="arpg/assets/sounds/The Complex.wav" />
@@ -33,12 +28,43 @@
 	<sound ID="Video Dungeon Boss" name="Video Dungeon Boss"
 		src="arpg/assets/sounds/Video Dungeon Boss.wav" />
 
-	<soundlist ID="DARK" name="Dark">
+	<soundlist ID="EXPLORING" name="Exploring">
 		<sound load="Tempting Secrets" />
 		<sound load="The Complex" />
 		<sound load="Black Vortex" />
 		<sound load="The Descent" />
 		<sound load="All This" />
 		<sound load="Hitman" />
+	</soundlist>
+	<soundlist ID="BRIGHT" name="Bright">
+		<sound load="Carefree" />
+		<sound load="Life of Riley" />
+	</soundlist>
+	<soundlist ID="ADVENTURE_INTRO" name="Adventure Introduction">
+		<sound load="Discovery Hit" />
+		<sound load="Take a Chance" />
+		<sound load="Call to Adventure" />
+	</soundlist>
+	<soundlist ID="ADVENTURE_INTRO2" name="Adventure Introduction 2">
+		<sound load="Adventure Meme" />
+		<sound load="Discovery Hit" />
+		<sound load="Take a Chance" />
+		<sound load="Call to Adventure" />
+	</soundlist>
+	<soundlist ID="DARK" name="Dark">
+		<sound load="8bit Dungeon Boss" />
+		<sound load="All This" />
+		<sound load="Black Vortex" />
+	</soundlist>
+	<soundlist ID="BLEAK" name="Bleak">
+		<sound load="Black Vortex" />
+		<sound load="Tempting Secrets" />
+		<sound load="The Descent" />
+	</soundlist>
+	<soundlist ID="ADVENTURE_INTRO3" name="Adventure Introduction 3">
+		<sound load="Discovery Hit" />
+		<sound load="Take a Chance" />
+		<sound load="Call to Adventure" />
+		<sound load="Adventure Meme" />
 	</soundlist>
 </soundfiles>

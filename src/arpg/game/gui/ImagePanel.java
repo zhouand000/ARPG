@@ -3,6 +3,8 @@ package arpg.game.gui;
 import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -17,6 +19,11 @@ import javax.swing.border.EmptyBorder;
 public class ImagePanel extends JPanel implements GraphicsConstants {
 	
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * The default border insets
+	 */
+	public static final Insets DEFAULT_BORDER_INSETS = new Insets(40, 40, 40, 40);
 	
 	/**
 	 * The background color to be used as a fail-safe in case the image is null;
@@ -38,17 +45,25 @@ public class ImagePanel extends JPanel implements GraphicsConstants {
 	 */
 	public Border border;
 	
+	private boolean shouldUpdate = true;
+	
 	/**
-	 * Determines if the image should be resized
+	 * The texturePaint object
 	 */
-	public boolean shouldRescale = true;
+	public TexturePaint texturePaint;
+	
+	/**
+	 * Determines if the image should be resized, tiled, left as-is, or not
+	 * painted
+	 */
+	public Mode mode = Mode.NONE;
 	
 	/**
 	 * 
 	 */
 	public ImagePanel () {
 		
-		this (new EmptyBorder(20, 20, 20, 20));
+		this(new EmptyBorder(DEFAULT_BORDER_INSETS));
 		
 	}
 	
@@ -58,7 +73,7 @@ public class ImagePanel extends JPanel implements GraphicsConstants {
 	 */
 	public ImagePanel (Border b) {
 		// TODO Auto-generated constructor stub
-		
+		System.out.println("");
 		setBorder(b);
 		backgroundImage = null;
 		scaledImage = null;
@@ -70,7 +85,7 @@ public class ImagePanel extends JPanel implements GraphicsConstants {
 			
 			@Override
 			public void componentResized (ComponentEvent e) {
-				shouldRescale = true;
+				shouldUpdate = true;
 			}
 			
 			@Override
@@ -84,6 +99,14 @@ public class ImagePanel extends JPanel implements GraphicsConstants {
 			}
 		});
 		
+	}
+	
+	/**
+	 * @param layoutManager
+	 */
+	public ImagePanel (LayoutManager layoutManager) {
+		this();
+		setLayout(layoutManager);
 	}
 	
 	/**
@@ -107,24 +130,65 @@ public class ImagePanel extends JPanel implements GraphicsConstants {
 			
 			backgroundImage = ImageIO.read(f);
 			
-			shouldRescale = true;
+			shouldUpdate = true;
 			
-			updateScaledImage();
+			updateImage();
 			
 		}
 		catch (IOException e) {
-			
+			backgroundImage = null;
+			mode = Mode.NONE;
+		}
+		
+	}
+	
+	private void updateImage () {
+		
+		switch (mode) {
+		
+			case SCALED:
+				updateScaledImage();
+				break;
+			case TILED:
+				updateTiledImage();
+				break;
+			default:
+				break;
+		
 		}
 		
 	}
 	
 	private void updateScaledImage () {
 		
-		if (backgroundImage != null && shouldRescale) {
+		if (backgroundImage != null && shouldUpdate) {
 			
 			scaledImage = backgroundImage.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
 			
 		}
+		shouldUpdate = false;
+		
+	}
+	
+	private void updateTiledImage () {
+		
+		if (backgroundImage != null && shouldUpdate) {
+			
+			texturePaint = new TexturePaint((BufferedImage) backgroundImage, (Rectangle2D) getBounds());
+			
+		}
+		shouldUpdate = false;
+		
+	}
+	
+	/**
+	 * @param mode
+	 *            Sets the mode of the panel
+	 */
+	public void setMode (Mode mode) {
+		
+		this.mode = mode;
+		shouldUpdate = true;
 		
 	}
 	
@@ -135,11 +199,36 @@ public class ImagePanel extends JPanel implements GraphicsConstants {
 	protected void paintComponent (Graphics g) {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
-		if (backgroundImage != null) {
-			
-			g.drawImage(backgroundImage.getScaledInstance(getWidth(), getHeight(), Image.SCALE_AREA_AVERAGING), 0, 0, this);
-			
+		
+		updateImage();
+		
+		switch (mode) {
+			case SCALED:
+				g.drawImage(scaledImage, 0, 0, this);
+				break;
+			case PLAIN:
+				g.drawImage(backgroundImage, 0, 0, this);
+				break;
+			case TILED:
+				Graphics2D g2d = (Graphics2D) g;
+				g2d.setPaint(texturePaint);
+				g2d.fillRect(0, 0, getWidth(), getHeight());
+			default:
+				break;
 		}
+	}
+	
+	/**
+	 * @author Andrew
+	 * 
+	 */
+	@SuppressWarnings("javadoc")
+	public enum Mode {
+		
+		TILED,
+		SCALED,
+		PLAIN,
+		NONE;
 		
 	}
 	
