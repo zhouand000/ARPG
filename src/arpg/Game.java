@@ -4,6 +4,7 @@
 package arpg;
 
 import java.io.PrintStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -65,7 +66,22 @@ public class Game {
 	 */
 	public Game () {
 		
-		gw = new GameWindow();
+		try {
+			SwingUtilities.invokeAndWait(new Runnable() {
+				
+				@Override
+				public void run () {
+					gw = new GameWindow();
+					
+				}
+			});
+		}
+		catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		ef = new EventFactory();
 		soundEngine = new SoundEngine();
 		eventGroupMap = ef.getEventGroupMap();
@@ -79,6 +95,7 @@ public class Game {
 			
 		}
 		
+		System.out.println(gw != null && gw.outputStream != null);
 		ps = new PrintStream(gw.outputStream);
 		sc = new Scanner(gw.inputStream);
 		
@@ -144,7 +161,7 @@ public class Game {
 	 * 
 	 */
 	public void displayEvent () {
-		
+		// System.setOut(ps);
 		final Event event = currentEvent;
 		
 		SwingUtilities.invokeLater(new Runnable() {
@@ -178,9 +195,9 @@ public class Game {
 				nextEvent = event.getChoice(getPlayerChoiceNumber()).getNextEvent();
 				
 				nextEvent
-				 = nextEvent == null ? eventMap.values().iterator().next() : nextEvent;
+				= nextEvent == null ? eventMap.values().iterator().next()
+						: nextEvent;
 				nextTick = true;
-				
 				
 			}
 			
@@ -191,8 +208,21 @@ public class Game {
 				int choice = -1;
 				
 				while (choice < 0) {
+					System.out.println("read");
 					input = sc.findInLine(INTEGER_PATTERN);
-					choice = Integer.parseInt(input);
+					
+					try {
+						choice = Integer.parseInt(input);
+					}
+					catch (NumberFormatException e) {
+						try {
+							Thread.sleep(1000);
+						}
+						catch (InterruptedException e1) {
+							e1.printStackTrace();
+						}
+					}
+					
 				}
 				return choice;
 			}

@@ -6,7 +6,6 @@ package arpg.game.gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 
 import javax.swing.*;
@@ -127,6 +126,11 @@ public class GameWindow extends JFrame implements GraphicsConstants {
 	/**
 	 * 
 	 */
+	public PrintStream printStream;
+	
+	/**
+	 * 
+	 */
 	public GameWindow () {
 		
 		configLookAndFeel();
@@ -163,25 +167,10 @@ public class GameWindow extends JFrame implements GraphicsConstants {
 			}
 		});
 		
-		try {
-			SwingUtilities.invokeAndWait(new Runnable() {
-				
-				@Override
-				public void run () {
-					
-					configGUI();
-					inputStream = new TextComponentInputStream(inputField);
-					outputStream = new TextAreaOutputStream(logArea);
-					
-				}
-			});
-		}
-		catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}
-		catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		configGUI();
+		inputStream = new TextComponentInputStream(inputField);
+		outputStream = new TextAreaOutputStream(logArea);
+		printStream = new PrintStream(outputStream);
 		
 	}
 	
@@ -287,16 +276,16 @@ public class GameWindow extends JFrame implements GraphicsConstants {
 		
 		logArea.setEditable(false);
 		logArea.setWrapStyleWord(true);
-		logArea.setFont(MONOSPACED_FONT);
+		// logArea.setFont(MONOSPACED_FONT);
 		logArea.setVisible(true);
 		
 		statusField.setEditable(false);
-		statusField.setFont(MONOSPACED_FONT);
+		// statusField.setFont(MONOSPACED_FONT);
 		statusField.setBackground(new Color(UIManager.getColor("RootPane.background").getRGB()));
 		statusField.setBorder(null);
 		
 		inputField.setEditable(true);
-		inputField.setFont(MONOSPACED_FONT);
+		// inputField.setFont(MONOSPACED_FONT);
 		
 	}
 	

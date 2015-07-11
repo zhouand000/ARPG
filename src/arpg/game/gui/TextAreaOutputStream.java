@@ -1,6 +1,3 @@
-/**
- * 
- */
 package arpg.game.gui;
 
 import java.io.IOException;
@@ -40,7 +37,7 @@ public class TextAreaOutputStream extends OutputStream {
 			return;
 		}
 		if (b == '\n') {
-			sb.append(new String(new int[] {b}, 0, 1));
+			sb.append(new String(new int[] { b }, 0, 1));
 			final String text = sb.toString();
 			SwingUtilities.invokeLater(new Runnable() {
 				

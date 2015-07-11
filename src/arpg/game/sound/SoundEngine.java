@@ -63,6 +63,13 @@ public class SoundEngine {
 	
 	boolean shouldStop;
 	
+	boolean isDaemon = true;
+	
+	/**
+	 * 
+	 */
+	public static boolean debug = false;
+	
 	/**
 	 * The path to the Sounds file. Should point directly to the Sounds file
 	 */
@@ -89,16 +96,29 @@ public class SoundEngine {
 	public static void main (String[] args) {
 		
 		SoundEngine engine = new SoundEngine();
+		debug = true;
+		engine.isDaemon = false;
 		
 		System.out.println(engine.soundMap);
 		System.out.println(engine.playlistMap);
 		
 		Playlist p = new Playlist("TestList");
 		
+		p.add("Adventure Meme");
 		p.add("The Curtain Rises");
 		p.add("Discovery Hit");
 		
-		// engine.playPlaylist(p);
+		engine.playPlaylist(p);
+		
+		// engine.play("Adventure Meme");
+		
+	}
+	
+	@SuppressWarnings("unused")
+	private void debugPrint (String s) {
+		if (debug) {
+			System.out.println(s);
+		}
 		
 	}
 	
@@ -167,21 +187,32 @@ public class SoundEngine {
 				thread.join();
 			}
 			catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		
+		shouldStop = false;
+		if (clip != null && clip.isRunning()) {
+			stop();
+		}
+		queue = new LinkedList<String>(p);
+		
+		playQueue();
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public void playQueue () {
 		
 		thread = new Thread(
 				new Runnable() {
 					@Override
 					public void run () {
-						if (clip != null && clip.isRunning()) {
-							stop();
-						}
-						queue = new LinkedList<String>(p);
-						String name;
+						
 						try {
+							String name;
 							while (!shouldStop && !queue.isEmpty()) {
 								
 								name = queue.peekFirst();
@@ -196,8 +227,7 @@ public class SoundEngine {
 										if (event.getType() == LineEvent.Type.STOP) {
 											queue.pollFirst();
 											clip.removeLineListener(listener);
-											System.out.println("DEBUG: Removing the first song from the queue");
-											// playNextQueuedSound();
+											// System.out.println("DEBUG: Removing the first song from the queue");
 											
 										}
 										
@@ -206,27 +236,26 @@ public class SoundEngine {
 								
 								clip.addLineListener(listener);
 								
-								// playNextQueuedSound(); // TODO Fix?
-								
 								while (!shouldStop && clip.isRunning()) {
 									// System.out.println("DEBUG: Playing Playlist");
-									Thread.sleep(10);
+									Thread.sleep(100);
 									
 								}
+								
 								// System.out.println("DEBUG: Done playing");
 								
 							}
 						}
 						catch (InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
 				},
 				"SoundThread"
 				);
-		thread.setDaemon(true);
-		thread.run();
+		
+		thread.setDaemon(isDaemon);
+		thread.start();
 		
 	}
 	
@@ -249,8 +278,6 @@ public class SoundEngine {
 				if (event.getType() == LineEvent.Type.STOP) {
 					queue.pollFirst();
 					clip.removeLineListener(listener);
-					// playNextQueuedSound();
-					
 				}
 				
 			}
@@ -305,36 +332,37 @@ public class SoundEngine {
 			throw new IllegalArgumentException(name + "could not be found");
 		}
 		
-		location = soundsFolderLocation + location;
+		// location = soundsFolderLocation + location;
+		
+		System.out.println(location);
 		
 		URL url = loader.getResource(location);
 		
 		AudioInputStream ais;
 		
 		try {
+			
 			ais = AudioSystem.getAudioInputStream(url);
 			
 			clipLength = (long) (ais.getFrameLength() / ais.getFormat().getFrameRate());
-			
 			clip = AudioSystem.getClip();
 			System.out.println("Open");
 			clip.open(ais);
 			
 		}
+		catch (NullPointerException e) {
+			e.printStackTrace();
+		}
 		catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		catch (UnsupportedAudioFileException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		catch (LineUnavailableException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -376,23 +404,18 @@ public class SoundEngine {
 			sp.parse(is, sxh);
 		}
 		catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		catch (SAXException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -450,7 +473,6 @@ public class SoundEngine {
 		 * 
 		 */
 		public SoundXMLHandler () {
-			// TODO Auto-generated constructor stub
 		}
 		
 		/* (non-Javadoc)
@@ -459,8 +481,6 @@ public class SoundEngine {
 		@Override
 		public void startElement (String uri, String localName, String qName,
 				Attributes attributes) throws SAXException {
-			
-			// TODO Auto-generated method stub
 			
 			elementStack.push(qName);
 			
@@ -503,7 +523,6 @@ public class SoundEngine {
 			elementStack.pop();
 			if (qName == "soundlist") {
 				System.out.println(((Playlist) objectStack.peek()).name);
-				// printStack(objectStack);
 				playlistMap.put(((Playlist) objectStack.peek()).name, (Playlist) objectStack.pop());
 			}
 			
@@ -515,7 +534,6 @@ public class SoundEngine {
 		 * 
 		 */
 		public <T> void printStack (Stack<T> s) {
-			// TODO Auto-generated method stub
 			
 			for (T t : s) {
 				System.out.println(t);
